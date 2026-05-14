@@ -55,11 +55,11 @@
 body{background:var(--bg);font-family:'Exo 2',sans-serif;color:var(--text);min-height:100vh;overflow-x:hidden;}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 20%,rgba(10,200,185,0.04) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 80% 80%,rgba(200,155,60,0.06) 0%,transparent 60%);pointer-events:none;z-index:0;}
 
-header{position:sticky;top:0;z-index:100;padding:0 1rem;border-bottom:1px solid var(--border);background:rgba(1,10,19,0.97);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:space-between;height:56px;}
+header{position:sticky;top:0;z-index:201;padding:0 1rem;border-bottom:1px solid var(--border);background:rgba(1,10,19,0.97);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:space-between;height:56px;}
 .logo{font-family:'Cinzel',serif;font-weight:900;font-size:1.1rem;color:var(--gold-light);letter-spacing:0.12em;display:flex;align-items:center;gap:8px;}
 .logo-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--gold-dark),var(--gold));clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--bg);font-weight:900;}
 
-nav{position:sticky;top:56px;z-index:99;display:flex;padding:0 1rem;background:rgba(13,17,23,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch;}
+nav{position:sticky;top:56px;z-index:200;display:flex;padding:0 1rem;background:rgba(13,17,23,0.99);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch;}
 nav button{background:none;border:none;cursor:pointer;padding:.85rem 1rem;font-family:'Exo 2',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text);position:relative;transition:color 0.2s;white-space:nowrap;}
 nav button::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform 0.2s;}
 nav button:hover{color:var(--text-light);}
@@ -87,36 +87,36 @@ input:focus,select:focus{border-color:var(--gold-dark);}
 select option{background:var(--bg4);}
 
 /* ── TEAM COMP ── */
-.comp-layout{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
-@media(max-width:700px){.comp-layout{grid-template-columns:1fr;}}
 
-.comp-controls{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:1.4rem;display:flex;flex-direction:column;gap:1rem;}
-.comp-controls-title{font-family:'Cinzel',serif;font-size:.95rem;color:var(--text-bright);margin-bottom:.2rem;}
-.comp-controls-sub{font-size:.72rem;color:var(--text);line-height:1.6;}
+@media(max-width:700px){}
 
-.comp-style-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
-.comp-style-btn{padding:9px 10px;background:var(--bg4);border:1px solid var(--border);border-radius:4px;cursor:pointer;font-family:'Exo 2',sans-serif;font-size:.72rem;font-weight:600;color:var(--text);transition:all .15s;text-align:left;}
-.comp-style-btn:hover{border-color:var(--gold-dark);color:var(--text-bright);}
-.comp-style-btn.selected{border-color:var(--gold);color:var(--gold-light);background:rgba(200,155,60,.08);}
-.comp-style-btn .csb-icon{font-size:1.1rem;display:block;margin-bottom:3px;}
-.comp-style-btn .csb-name{display:block;font-size:.72rem;font-weight:700;}
-.comp-style-btn .csb-desc{display:block;font-size:.62rem;color:var(--text);margin-top:2px;font-weight:400;}
 
-.comp-generate-btn{width:100%;padding:.75rem;background:linear-gradient(135deg,var(--gold-dark),var(--gold));border:none;border-radius:4px;font-family:'Cinzel',serif;font-size:.9rem;font-weight:600;color:var(--bg);cursor:pointer;transition:all .2s;letter-spacing:.06em;}
-.comp-generate-btn:hover{filter:brightness(1.12);transform:translateY(-1px);}
-.comp-generate-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
 
-.comp-pool-summary{display:flex;flex-direction:column;gap:6px;}
-.comp-pool-row{display:flex;align-items:center;gap:8px;font-size:.75rem;}
-.comp-pool-icons{display:flex;gap:3px;flex-wrap:wrap;}
-.comp-pool-icon{width:24px;height:24px;border-radius:3px;overflow:hidden;border:1px solid var(--border);background:var(--bg4);flex-shrink:0;}
-.comp-pool-icon img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
-.comp-pool-icon-fb{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:.6rem;color:var(--gold-dark);font-weight:700;}
 
-.comp-results{display:flex;flex-direction:column;gap:1rem;}
-.comp-loading{text-align:center;padding:3rem 1rem;color:var(--text);}
-.comp-loading .spin{font-size:2rem;animation:spin 1s linear infinite;display:inline-block;margin-bottom:.5rem;}
-@keyframes spin{to{transform:rotate(360deg);}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
 
 .comp-card{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:1.3rem;transition:border-color .2s;}
 .comp-card:hover{border-color:rgba(200,155,60,.3);}
@@ -142,17 +142,17 @@ select option{background:var(--bg4);}
 .comp-bans-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text);font-weight:600;}
 .comp-ban-chip{background:rgba(198,59,59,.08);border:1px solid rgba(198,59,59,.25);color:#e08080;padding:2px 8px;border-radius:2px;font-size:.68rem;}
 
-.comp-learn{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:1.3rem;}
-.comp-learn-title{font-family:'Cinzel',serif;font-size:.95rem;color:var(--text-bright);margin-bottom:.9rem;}
-.comp-learn-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid rgba(120,90,40,.12);}
-.comp-learn-row:last-child{border-bottom:none;}
-.comp-learn-avatar{width:36px;height:36px;border-radius:50%;overflow:hidden;border:2px solid var(--gold-dark);flex-shrink:0;background:var(--bg4);}
-.comp-learn-avatar img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
-.comp-learn-info{flex:1;}
-.comp-learn-player{font-size:.8rem;font-weight:600;color:var(--text-bright);}
-.comp-learn-text{font-size:.74rem;color:var(--text);line-height:1.5;margin-top:2px;}
-.comp-learn-champs{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px;}
-.comp-learn-champ{background:rgba(200,155,60,.1);border:1px solid rgba(200,155,60,.25);color:var(--gold);padding:1px 7px;border-radius:2px;font-size:.65rem;font-weight:600;}
+
+
+
+
+
+
+
+
+
+
+
 
 .comp-empty{text-align:center;padding:3rem 1rem;color:var(--text);opacity:.5;}
 .comp-empty .big{font-size:2.5rem;margin-bottom:.5rem;}
@@ -198,6 +198,50 @@ select option{background:var(--bg4);}
 .saved-comps{display:flex;flex-direction:column;gap:.8rem;margin-top:1rem;}
 .saved-comps-title{font-family:'Cinzel',serif;font-size:1rem;color:var(--text-bright);margin-bottom:.5rem;}
 
+/* ── CHAMPION INFO MODAL ── */
+.champ-modal-bg{position:fixed;inset:0;background:rgba(1,10,19,.9);z-index:500;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);padding:1rem;}
+.champ-modal{background:var(--bg2);border:1px solid var(--border);border-radius:8px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;animation:fadeUp .25s ease;position:relative;}
+.champ-modal-splash{position:relative;width:100%;height:160px;overflow:hidden;border-radius:8px 8px 0 0;background:var(--bg4);}
+.champ-modal-splash img{width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;filter:brightness(.7);}
+.champ-modal-splash-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,var(--bg2));}
+.champ-modal-splash-title{position:absolute;bottom:1rem;left:1.2rem;}
+.champ-modal-name{font-family:'Cinzel',serif;font-size:1.4rem;font-weight:900;color:var(--text-bright);}
+.champ-modal-title-text{font-size:.75rem;color:var(--text-light);letter-spacing:.08em;}
+.champ-modal-close{position:absolute;top:.75rem;right:.75rem;background:rgba(1,10,19,.6);border:1px solid var(--border);color:var(--text);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center;z-index:2;transition:all .15s;}
+.champ-modal-close:hover{border-color:var(--red);color:var(--red);}
+.champ-modal-body{padding:1.2rem;}
+.champ-modal-links{display:flex;gap:8px;margin-bottom:1.2rem;flex-wrap:wrap;}
+.champ-link-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:3px;font-family:'Exo 2',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:all .15s;border:none;cursor:pointer;}
+.champ-link-ugg{background:linear-gradient(135deg,#c84b31,#e05a3a);color:#fff;}
+.champ-link-wiki{background:var(--bg4);border:1px solid var(--border);color:var(--text-light);}
+.champ-link-ugg:hover,.champ-link-wiki:hover{filter:brightness(1.15);transform:translateY(-1px);}
+
+.champ-modal-section{margin-bottom:1.1rem;}
+.champ-modal-section-title{font-size:.65rem;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);font-weight:700;margin-bottom:.6rem;display:flex;align-items:center;gap:6px;}
+.champ-modal-section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+
+.champ-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.champ-stat{background:var(--bg4);border:1px solid var(--border);border-radius:3px;padding:6px 8px;text-align:center;}
+.champ-stat-val{font-size:.9rem;font-weight:700;color:var(--text-bright);font-family:'Cinzel',serif;}
+.champ-stat-label{font-size:.58rem;color:var(--text);text-transform:uppercase;letter-spacing:.08em;margin-top:2px;}
+
+.champ-skills{display:flex;flex-direction:column;gap:6px;}
+.champ-skill{display:flex;align-items:flex-start;gap:10px;background:var(--bg4);border:1px solid var(--border);border-radius:4px;padding:8px 10px;}
+.champ-skill-img{width:36px;height:36px;border-radius:3px;overflow:hidden;flex-shrink:0;background:var(--bg);border:1px solid var(--border);}
+.champ-skill-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.champ-skill-key{width:20px;height:20px;border-radius:3px;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:var(--gold);flex-shrink:0;margin-top:2px;}
+.champ-skill-info{flex:1;min-width:0;}
+.champ-skill-name{font-size:.78rem;font-weight:600;color:var(--text-bright);margin-bottom:2px;}
+.champ-skill-desc{font-size:.68rem;color:var(--text);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+
+.champ-lore{font-size:.75rem;color:var(--text);line-height:1.7;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;}
+
+.champ-tags{display:flex;gap:5px;flex-wrap:wrap;}
+.champ-tag-badge{background:rgba(200,155,60,.1);border:1px solid rgba(200,155,60,.25);color:var(--gold);padding:2px 8px;border-radius:2px;font-size:.65rem;font-weight:600;}
+
+.champ-modal-loading{text-align:center;padding:3rem;color:var(--text);}
+.champ-modal-spin{font-size:1.8rem;animation:spin 1s linear infinite;display:inline-block;}
+
 #toast{position:fixed;bottom:1rem;right:1rem;left:1rem;text-align:center;background:var(--bg3);border:1px solid var(--gold-dark);padding:.75rem 1.4rem;border-radius:4px;font-size:.82rem;color:var(--text-light);z-index:1000;transform:translateY(80px);opacity:0;transition:all .3s;box-shadow:0 8px 32px rgba(0,0,0,.5);}@media(min-width:500px){#toast{left:auto;right:2rem;text-align:left;}}
 #toast.show{transform:translateY(0);opacity:1;}
 ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg2);}::-webkit-scrollbar-thumb{background:var(--gold-dark);border-radius:3px;}
@@ -207,7 +251,7 @@ select option{background:var(--bg4);}
 
 .player-card{
   background:var(--bg3);border:1px solid var(--border);
-  border-radius:6px;overflow:visible;
+  border-radius:6px;overflow:hidden;
   transition:border-color .2s,box-shadow .2s;
   display:flex;flex-direction:column;
 }
@@ -234,7 +278,7 @@ select option{background:var(--bg4);}
 .player-rank{font-size:.72rem;color:var(--text);margin-top:4px;}
 
 /* CHAMPION MINI-TABLE inside player card */
-.champ-table-wrap{padding:0 1.4rem 1.2rem;}
+.champ-table-wrap{padding:0 1.4rem 1.2rem;position:relative;}
 .champ-table-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text);font-weight:600;margin-bottom:.5rem;display:flex;align-items:center;justify-content:space-between;}
 .champ-table-label span{color:var(--text);}
 .champ-add-btn{background:none;border:1px dashed rgba(200,155,60,.3);color:var(--gold-dark);padding:2px 8px;border-radius:2px;cursor:pointer;font-size:.68rem;font-family:'Exo 2',sans-serif;font-weight:600;transition:all .15s;}
@@ -247,7 +291,7 @@ select option{background:var(--bg4);}
 .champ-row-img img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
 .champ-row-name{flex:1;font-size:.72rem;color:var(--text-bright);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;}
 .champ-row-role{font-size:.58rem;color:var(--text);background:var(--bg3);padding:1px 5px;border-radius:2px;border:1px solid var(--border);white-space:nowrap;flex-shrink:0;}
-.champ-row-del{background:none;border:none;color:var(--red);cursor:pointer;font-size:.7rem;opacity:1;transition:all .15s;padding:2px 6px;flex-shrink:0;border-radius:2px;}
+.champ-row-del{background:none;border:1px solid rgba(200,60,60,.3);color:var(--red);cursor:pointer;font-size:.62rem;opacity:1;transition:all .15s;padding:1px 5px;flex-shrink:0;border-radius:2px;min-width:18px;text-align:center;}
 .champ-row:hover .champ-row-del{background:rgba(200,60,60,.15);}
 
 .champ-empty{font-size:.74rem;color:var(--text);opacity:.4;padding:.5rem 0;text-align:center;font-style:italic;grid-column:1/-1;}
@@ -346,36 +390,36 @@ select option{background:var(--bg4);}
 .rp-cancel:hover{color:var(--red);}
 
 /* ── TEAM COMP ── */
-.comp-layout{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
-@media(max-width:700px){.comp-layout{grid-template-columns:1fr;}}
 
-.comp-controls{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:1.4rem;display:flex;flex-direction:column;gap:1rem;}
-.comp-controls-title{font-family:'Cinzel',serif;font-size:.95rem;color:var(--text-bright);margin-bottom:.2rem;}
-.comp-controls-sub{font-size:.72rem;color:var(--text);line-height:1.6;}
+@media(max-width:700px){}
 
-.comp-style-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
-.comp-style-btn{padding:9px 10px;background:var(--bg4);border:1px solid var(--border);border-radius:4px;cursor:pointer;font-family:'Exo 2',sans-serif;font-size:.72rem;font-weight:600;color:var(--text);transition:all .15s;text-align:left;}
-.comp-style-btn:hover{border-color:var(--gold-dark);color:var(--text-bright);}
-.comp-style-btn.selected{border-color:var(--gold);color:var(--gold-light);background:rgba(200,155,60,.08);}
-.comp-style-btn .csb-icon{font-size:1.1rem;display:block;margin-bottom:3px;}
-.comp-style-btn .csb-name{display:block;font-size:.72rem;font-weight:700;}
-.comp-style-btn .csb-desc{display:block;font-size:.62rem;color:var(--text);margin-top:2px;font-weight:400;}
 
-.comp-generate-btn{width:100%;padding:.75rem;background:linear-gradient(135deg,var(--gold-dark),var(--gold));border:none;border-radius:4px;font-family:'Cinzel',serif;font-size:.9rem;font-weight:600;color:var(--bg);cursor:pointer;transition:all .2s;letter-spacing:.06em;}
-.comp-generate-btn:hover{filter:brightness(1.12);transform:translateY(-1px);}
-.comp-generate-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
 
-.comp-pool-summary{display:flex;flex-direction:column;gap:6px;}
-.comp-pool-row{display:flex;align-items:center;gap:8px;font-size:.75rem;}
-.comp-pool-icons{display:flex;gap:3px;flex-wrap:wrap;}
-.comp-pool-icon{width:24px;height:24px;border-radius:3px;overflow:hidden;border:1px solid var(--border);background:var(--bg4);flex-shrink:0;}
-.comp-pool-icon img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
-.comp-pool-icon-fb{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:.6rem;color:var(--gold-dark);font-weight:700;}
 
-.comp-results{display:flex;flex-direction:column;gap:1rem;}
-.comp-loading{text-align:center;padding:3rem 1rem;color:var(--text);}
-.comp-loading .spin{font-size:2rem;animation:spin 1s linear infinite;display:inline-block;margin-bottom:.5rem;}
-@keyframes spin{to{transform:rotate(360deg);}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
 
 .comp-card{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:1.3rem;transition:border-color .2s;}
 .comp-card:hover{border-color:rgba(200,155,60,.3);}
@@ -401,17 +445,17 @@ select option{background:var(--bg4);}
 .comp-bans-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text);font-weight:600;}
 .comp-ban-chip{background:rgba(198,59,59,.08);border:1px solid rgba(198,59,59,.25);color:#e08080;padding:2px 8px;border-radius:2px;font-size:.68rem;}
 
-.comp-learn{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:1.3rem;}
-.comp-learn-title{font-family:'Cinzel',serif;font-size:.95rem;color:var(--text-bright);margin-bottom:.9rem;}
-.comp-learn-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid rgba(120,90,40,.12);}
-.comp-learn-row:last-child{border-bottom:none;}
-.comp-learn-avatar{width:36px;height:36px;border-radius:50%;overflow:hidden;border:2px solid var(--gold-dark);flex-shrink:0;background:var(--bg4);}
-.comp-learn-avatar img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
-.comp-learn-info{flex:1;}
-.comp-learn-player{font-size:.8rem;font-weight:600;color:var(--text-bright);}
-.comp-learn-text{font-size:.74rem;color:var(--text);line-height:1.5;margin-top:2px;}
-.comp-learn-champs{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px;}
-.comp-learn-champ{background:rgba(200,155,60,.1);border:1px solid rgba(200,155,60,.25);color:var(--gold);padding:1px 7px;border-radius:2px;font-size:.65rem;font-weight:600;}
+
+
+
+
+
+
+
+
+
+
+
 
 .comp-empty{text-align:center;padding:3rem 1rem;color:var(--text);opacity:.5;}
 .comp-empty .big{font-size:2.5rem;margin-bottom:.5rem;}
@@ -457,6 +501,50 @@ select option{background:var(--bg4);}
 .saved-comps{display:flex;flex-direction:column;gap:.8rem;margin-top:1rem;}
 .saved-comps-title{font-family:'Cinzel',serif;font-size:1rem;color:var(--text-bright);margin-bottom:.5rem;}
 
+/* ── CHAMPION INFO MODAL ── */
+.champ-modal-bg{position:fixed;inset:0;background:rgba(1,10,19,.9);z-index:500;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);padding:1rem;}
+.champ-modal{background:var(--bg2);border:1px solid var(--border);border-radius:8px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;animation:fadeUp .25s ease;position:relative;}
+.champ-modal-splash{position:relative;width:100%;height:160px;overflow:hidden;border-radius:8px 8px 0 0;background:var(--bg4);}
+.champ-modal-splash img{width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;filter:brightness(.7);}
+.champ-modal-splash-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,var(--bg2));}
+.champ-modal-splash-title{position:absolute;bottom:1rem;left:1.2rem;}
+.champ-modal-name{font-family:'Cinzel',serif;font-size:1.4rem;font-weight:900;color:var(--text-bright);}
+.champ-modal-title-text{font-size:.75rem;color:var(--text-light);letter-spacing:.08em;}
+.champ-modal-close{position:absolute;top:.75rem;right:.75rem;background:rgba(1,10,19,.6);border:1px solid var(--border);color:var(--text);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center;z-index:2;transition:all .15s;}
+.champ-modal-close:hover{border-color:var(--red);color:var(--red);}
+.champ-modal-body{padding:1.2rem;}
+.champ-modal-links{display:flex;gap:8px;margin-bottom:1.2rem;flex-wrap:wrap;}
+.champ-link-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:3px;font-family:'Exo 2',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:all .15s;border:none;cursor:pointer;}
+.champ-link-ugg{background:linear-gradient(135deg,#c84b31,#e05a3a);color:#fff;}
+.champ-link-wiki{background:var(--bg4);border:1px solid var(--border);color:var(--text-light);}
+.champ-link-ugg:hover,.champ-link-wiki:hover{filter:brightness(1.15);transform:translateY(-1px);}
+
+.champ-modal-section{margin-bottom:1.1rem;}
+.champ-modal-section-title{font-size:.65rem;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);font-weight:700;margin-bottom:.6rem;display:flex;align-items:center;gap:6px;}
+.champ-modal-section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+
+.champ-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.champ-stat{background:var(--bg4);border:1px solid var(--border);border-radius:3px;padding:6px 8px;text-align:center;}
+.champ-stat-val{font-size:.9rem;font-weight:700;color:var(--text-bright);font-family:'Cinzel',serif;}
+.champ-stat-label{font-size:.58rem;color:var(--text);text-transform:uppercase;letter-spacing:.08em;margin-top:2px;}
+
+.champ-skills{display:flex;flex-direction:column;gap:6px;}
+.champ-skill{display:flex;align-items:flex-start;gap:10px;background:var(--bg4);border:1px solid var(--border);border-radius:4px;padding:8px 10px;}
+.champ-skill-img{width:36px;height:36px;border-radius:3px;overflow:hidden;flex-shrink:0;background:var(--bg);border:1px solid var(--border);}
+.champ-skill-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.champ-skill-key{width:20px;height:20px;border-radius:3px;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:var(--gold);flex-shrink:0;margin-top:2px;}
+.champ-skill-info{flex:1;min-width:0;}
+.champ-skill-name{font-size:.78rem;font-weight:600;color:var(--text-bright);margin-bottom:2px;}
+.champ-skill-desc{font-size:.68rem;color:var(--text);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+
+.champ-lore{font-size:.75rem;color:var(--text);line-height:1.7;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;}
+
+.champ-tags{display:flex;gap:5px;flex-wrap:wrap;}
+.champ-tag-badge{background:rgba(200,155,60,.1);border:1px solid rgba(200,155,60,.25);color:var(--gold);padding:2px 8px;border-radius:2px;font-size:.65rem;font-weight:600;}
+
+.champ-modal-loading{text-align:center;padding:3rem;color:var(--text);}
+.champ-modal-spin{font-size:1.8rem;animation:spin 1s linear infinite;display:inline-block;}
+
 #toast{position:fixed;bottom:1rem;right:1rem;left:1rem;text-align:center;background:var(--bg3);border:1px solid var(--gold-dark);padding:.75rem 1.4rem;border-radius:4px;font-size:.82rem;color:var(--text-light);z-index:2000;transform:translateY(80px);opacity:0;transition:all .3s;box-shadow:0 8px 32px rgba(0,0,0,.5);}@media(min-width:500px){#toast{left:auto;right:2rem;text-align:left;}}
 #toast.show{transform:translateY(0);opacity:1;}
 </style>
@@ -481,8 +569,7 @@ select option{background:var(--bg4);}
   <button class="active" onclick="showSection('players',this)">⚔ Spieler & Champs</button>
   <button onclick="showSection('todo',this)">✅ To-Do</button>
   <button onclick="showSection('browser',this)">🔍 Champion Browser</button>
-  <button onclick="showSection('teamcomp',this)">🤖 KI Comp</button>
-  <button onclick="showSection('manualcomp',this)">✏️ Manuell</button>
+  <button onclick="showSection('manualcomp',this)">✏️ Comp Builder</button>
 </nav>
 
 <main>
@@ -541,68 +628,6 @@ select option{background:var(--bg4);}
     </div>
   </div>
 
-  <!-- ══ TEAM COMP ══ -->
-  <div id="teamcomp" class="section">
-    <div class="section-header">
-      <div class="section-title"><span>KI-Analyse</span>Team Composition</div>
-    </div>
-    <div class="comp-layout">
-      <!-- Controls -->
-      <div style="display:flex;flex-direction:column;gap:1rem;">
-        <div class="comp-controls">
-          <div class="comp-controls-title">Kompositions-Stil</div>
-          <div class="comp-controls-sub">Wähle einen Stil — die KI analysiert eure Champion-Pools und schlägt die besten Kombinationen vor.</div>
-          <div class="comp-style-grid" id="compStyleGrid">
-            <button class="comp-style-btn selected" data-style="Engage" onclick="selectStyle(this)">
-              <span class="csb-icon">⚔️</span>
-              <span class="csb-name">Engage</span>
-              <span class="csb-desc">Hard CC, Team-Fights gewinnen</span>
-            </button>
-            <button class="comp-style-btn" data-style="Poke" onclick="selectStyle(this)">
-              <span class="csb-icon">🎯</span>
-              <span class="csb-name">Poke</span>
-              <span class="csb-desc">Harass, Gegner schwächen</span>
-            </button>
-            <button class="comp-style-btn" data-style="Protect the Carry" onclick="selectStyle(this)">
-              <span class="csb-icon">🛡️</span>
-              <span class="csb-name">Protect Carry</span>
-              <span class="csb-desc">Hypercarry schützen</span>
-            </button>
-            <button class="comp-style-btn" data-style="Split Push" onclick="selectStyle(this)">
-              <span class="csb-icon">🗺️</span>
-              <span class="csb-name">Split Push</span>
-              <span class="csb-desc">Sidelane-Druck, 1-3-1</span>
-            </button>
-            <button class="comp-style-btn" data-style="Pick" onclick="selectStyle(this)">
-              <span class="csb-icon">👁️</span>
-              <span class="csb-name">Pick</span>
-              <span class="csb-desc">Einzelziele isolieren</span>
-            </button>
-            <button class="comp-style-btn" data-style="Beliebig" onclick="selectStyle(this)">
-              <span class="csb-icon">🎲</span>
-              <span class="csb-name">Beliebig</span>
-              <span class="csb-desc">KI wählt den besten Stil</span>
-            </button>
-          </div>
-          <button class="comp-generate-btn" id="generateBtn" onclick="generateComp()">⚡ Team-Comp generieren</button>
-        </div>
-        <!-- Pool Summary -->
-        <div class="comp-controls">
-          <div class="comp-controls-title">Champion-Pools</div>
-          <div class="comp-pool-summary" id="compPoolSummary"></div>
-        </div>
-      </div>
-      <!-- Results -->
-      <div class="comp-results" id="compResults">
-        <div class="comp-empty"><div class="big">🤖</div><p>Wähle einen Stil und klicke auf "Generieren"</p></div>
-      </div>
-    </div>
-    <!-- Learn suggestions -->
-    <div style="margin-top:1.5rem;" id="compLearnWrap" style="display:none;">
-      <div class="comp-learn" id="compLearn"></div>
-    </div>
-  </div>
-
   <!-- ══ MANUAL COMP ══ -->
   <div id="manualcomp" class="section">
     <div class="section-header">
@@ -638,6 +663,45 @@ select option{background:var(--bg4);}
   </div>
 
 </main>
+
+<!-- CHAMPION INFO MODAL -->
+<div id="champInfoModal" class="champ-modal-bg" style="display:none;" onclick="closeChampModal(event)">
+  <div class="champ-modal" id="champModalInner">
+    <div class="champ-modal-loading" id="champModalLoading">
+      <div class="champ-modal-spin">⚔</div><br>Lade Champion-Daten…
+    </div>
+    <div id="champModalContent" style="display:none;">
+      <div class="champ-modal-splash">
+        <img id="cmi-splash" src="" alt="">
+        <div class="champ-modal-splash-overlay"></div>
+        <div class="champ-modal-splash-title">
+          <div class="champ-modal-name" id="cmi-name"></div>
+          <div class="champ-modal-title-text" id="cmi-title"></div>
+        </div>
+      </div>
+      <button class="champ-modal-close" onclick="document.getElementById('champInfoModal').style.display='none'">✕</button>
+      <div class="champ-modal-body">
+        <div class="champ-modal-links" id="cmi-links"></div>
+        <div class="champ-modal-section">
+          <div class="champ-modal-section-title">Klassen & Tags</div>
+          <div class="champ-tags" id="cmi-tags"></div>
+        </div>
+        <div class="champ-modal-section">
+          <div class="champ-modal-section-title">Base Stats</div>
+          <div class="champ-stats-grid" id="cmi-stats"></div>
+        </div>
+        <div class="champ-modal-section">
+          <div class="champ-modal-section-title">Skills</div>
+          <div class="champ-skills" id="cmi-skills"></div>
+        </div>
+        <div class="champ-modal-section">
+          <div class="champ-modal-section-title">Lore</div>
+          <div class="champ-lore" id="cmi-lore"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div id="toast"></div>
 
@@ -880,7 +944,7 @@ let activeRoleFilter = 'All';
 
 function save(){ fbSave(); }
 function toast(m){ const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200); }
-function showSection(id,btn){ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');if(id==='browser')renderBrowserSidebar();if(id==='teamcomp')renderCompPoolSummary();if(id==='manualcomp'){renderManualSlots();renderSavedComps();} }
+function showSection(id,btn){ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');if(id==='browser')renderBrowserSidebar();if(id==='manualcomp'){renderManualSlots();renderSavedComps();} }
 document.getElementById('teamNameDisplay').textContent=S.teamName;
 function editTeamName(){ const n=prompt('Team-Name:',S.teamName);if(n?.trim()){S.teamName=n.trim().toUpperCase();document.getElementById('teamNameDisplay').textContent=S.teamName;save();toast('Team-Name gespeichert!');} }
 
@@ -912,7 +976,7 @@ function renderPlayers(){
           ${p.pool.length===0
             ? `<div class="champ-empty">Noch keine Champions — über Browser hinzufügen</div>`
             : p.pool.map(c=>`
-              <div class="champ-row">
+              <div class="champ-row" onclick="openChampInfo(this)" data-id="${c.champId}" data-name="${c.champName.replace(/'/g,'&apos;')}" style="cursor:pointer;">
                 <div class="champ-row-img">
                   <img src="${img(c.champId)}" alt="${c.champName}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="cr-fallback" style="display:none">${c.champName[0]}</div>
                 </div>
@@ -977,7 +1041,7 @@ function renderBrowser(){
   document.getElementById('champGrid').innerHTML=list.map(([id,name,roles])=>{
     const safeName=name.replace(/'/g,"\\'").replace(/"/g,'&quot;');
     const dots=(roles||[]).map(r=>`<span class="ct-role-dot ct-${r}"></span>`).join('');
-    return `<div class="champ-tile${ownedIds.has(id)?' owned':''}"
+    return `<div class="champ-tile${ownedIds.has(id)?' owned':''}" ondblclick="openChampInfo(this)" data-id="${id}" data-name="${name}""
          onclick="champClick('${id}','${safeName}',event)"
          title="${name} — ${(roles||[]).join(' / ')}">
       <div class="ct-img">
@@ -1042,178 +1106,6 @@ function delTodo(r,id){S.todos[r]=S.todos[r].filter(t=>t.id!==id);save();renderT
 function clearDone(){ROLES.forEach(r=>{if(S.todos[r])S.todos[r]=S.todos[r].filter(t=>!t.done);});save();renderTodo();toast('Erledigte gelöscht.');}
 
 // ── TEAM COMP ─────────────────────────────────────────────────
-let selectedCompStyle = 'Engage';
-
-function selectStyle(btn){
-  document.querySelectorAll('.comp-style-btn').forEach(b=>b.classList.remove('selected'));
-  btn.classList.add('selected');
-  selectedCompStyle = btn.dataset.style;
-}
-
-function renderCompPoolSummary(){
-  const el = document.getElementById('compPoolSummary');
-  if(!el) return;
-  el.innerHTML = S.players.map(p=>{
-    const icons = p.pool.slice(0,6).map(c=>`
-      <div class="comp-pool-icon" title="${c.champName}">
-        <img src="${img(c.champId)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="comp-pool-icon-fb" style="display:none">${c.champName[0]}</div>
-      </div>`).join('');
-    return `<div class="comp-pool-row">
-      <span class="role-badge role-${p.role}" style="flex-shrink:0;">${ROLE_ICONS[p.role]} ${p.name.replace('RG ','')}</span>
-      <div class="comp-pool-icons">${icons || '<span style="font-size:.7rem;color:var(--text);opacity:.5">Kein Pool</span>'}</div>
-    </div>`;
-  }).join('');
-}
-
-async function generateComp(){
-  const btn = document.getElementById('generateBtn');
-  const results = document.getElementById('compResults');
-
-  // Check if pools have enough data
-  const totalChamps = S.players.reduce((sum,p)=>sum+p.pool.length,0);
-  if(totalChamps < 3){
-    toast('Bitte erst Champion-Pools befüllen!');
-    return;
-  }
-
-  btn.disabled = true;
-  btn.textContent = '⏳ Analysiere…';
-  results.innerHTML = '<div class="comp-loading"><div class="spin">⚔</div><p>KI analysiert eure Champion-Pools…</p></div>';
-  document.getElementById('compLearnWrap').style.display='none';
-
-  // Build prompt
-  const poolDesc = S.players.map(p=>{
-    const champs = p.pool.map(c=>`${c.champName}(${c.role})`).join(', ');
-    return `${p.name} (${p.role}): ${champs || 'kein Pool'}`;
-  }).join('\n');
-
-  const prompt = `Du bist ein League of Legends Coach für ein kompetitives Team namens "Rising Generation".
-
-Hier sind die Champion-Pools der 5 Spieler:
-${poolDesc}
-
-Gewünschter Kompositions-Stil: ${selectedCompStyle}
-
-Aufgabe 1 — Team-Compositions:
-Erstelle 2 konkrete Team-Comps ausschließlich aus den vorhandenen Champion-Pools. Falls ein Spieler für eine Rolle keinen passenden Champion hat, nutze trotzdem nur seine vorhandenen Champs und erkläre den Kompromiss.
-
-Aufgabe 2 — Lernempfehlungen:
-Analysiere die Pools und empfehle jedem Spieler 1-2 Champions die sie lernen sollten um flexibler/stärker zu werden, mit kurzer Begründung.
-
-Antworte NUR als gültiges JSON in diesem Format (kein Text drumherum, keine Markdown-Backticks):
-{
-  "comps": [
-    {
-      "name": "Comp-Name",
-      "style": "Stil",
-      "picks": [
-        {"role":"Top","champion":"Name","player":"RG Kicker"},
-        {"role":"Jungle","champion":"Name","player":"RG Chidori"},
-        {"role":"Mid","champion":"Name","player":"RG Cubes"},
-        {"role":"Bot","champion":"Name","player":"RG Keenz"},
-        {"role":"Support","champion":"Name","player":"RG Fireknight"}
-      ],
-      "analysis": "Kurze Erklärung warum diese Comp funktioniert (2-3 Sätze)",
-      "bans": ["Ban1","Ban2","Ban3"]
-    }
-  ],
-  "learn": [
-    {"player":"RG Kicker","champions":["Champ1","Champ2"],"reason":"Begründung"},
-    {"player":"RG Chidori","champions":["Champ1"],"reason":"Begründung"},
-    {"player":"RG Cubes","champions":["Champ1","Champ2"],"reason":"Begründung"},
-    {"player":"RG Keenz","champions":["Champ1"],"reason":"Begründung"},
-    {"player":"RG Fireknight","champions":["Champ1","Champ2"],"reason":"Begründung"}
-  ]
-}`;
-
-  try {
-    const data = await callAI(prompt);
-    const text = data.content?.[0]?.text || '';
-
-    // Parse JSON
-    let parsed;
-    try {
-      const clean = text.replace(/```json|```/g,'').trim();
-      parsed = JSON.parse(clean);
-    } catch(e) {
-      throw new Error('JSON-Parsing fehlgeschlagen');
-    }
-
-    renderCompResults(parsed);
-
-  } catch(e) {
-    results.innerHTML = `<div class="comp-empty"><div class="big">⚠️</div><p>Fehler: ${e.message}<br><small>Stelle sicher dass die API erreichbar ist.</small></p></div>`;
-  } finally {
-    btn.disabled = false;
-    btn.textContent = '⚡ Team-Comp generieren';
-  }
-}
-
-function renderCompResults(data){
-  const results = document.getElementById('compResults');
-
-  // Render comps
-  results.innerHTML = (data.comps||[]).map(comp=>{
-    const picks = (comp.picks||[]).map(p=>{
-      // Find champId from name
-      const found = ALL_CHAMPS.find(([id,name])=>name.toLowerCase()===p.champion.toLowerCase());
-      const champId = found ? found[0] : p.champion;
-      return `<div class="comp-pick" data-role="${p.role}">
-        <div class="comp-pick-img">
-          <img src="${img(champId)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="comp-pick-img-fb" style="display:none">${p.champion[0]}</div>
-        </div>
-        <div class="comp-pick-name">${p.champion}</div>
-        <div class="comp-pick-role">${p.player.replace('RG ','')}</div>
-      </div>`;
-    }).join('');
-
-    const bans = (comp.bans||[]).map(b=>`<span class="comp-ban-chip">✕ ${b}</span>`).join('');
-
-    return `<div class="comp-card">
-      <div class="comp-card-header">
-        <div class="comp-card-title">${comp.name}</div>
-        <span class="comp-card-type">${comp.style}</span>
-      </div>
-      <div class="comp-picks">${picks}</div>
-      <div class="comp-analysis">${comp.analysis}</div>
-      ${bans?`<div class="comp-bans"><span class="comp-bans-label">Bans:</span>${bans}</div>`:''}
-    </div>`;
-  }).join('');
-
-  // Render learn suggestions
-  if(data.learn && data.learn.length){
-    const learnWrap = document.getElementById('compLearnWrap');
-    const learnEl = document.getElementById('compLearn');
-    learnEl.innerHTML = `<div class="comp-learn-title">📚 Lernempfehlungen</div>` +
-      data.learn.map(l=>{
-        const player = S.players.find(p=>p.name===l.player);
-        const avatarId = player?.avatar || '';
-        return `<div class="comp-learn-row">
-          <div class="comp-learn-avatar">
-            ${avatarId
-              ? `<img src="${img(avatarId)}" loading="lazy" onerror="this.style.display='none'">`
-              : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--gold);">${l.player[0]}</div>`
-            }
-          </div>
-          <div class="comp-learn-info">
-            <div class="comp-learn-player">${l.player}</div>
-            <div class="comp-learn-champs">${(l.champions||[]).map(ch=>`<span class="comp-learn-champ">${ch}</span>`).join('')}</div>
-            <div class="comp-learn-text">${l.reason}</div>
-          </div>
-        </div>`;
-      }).join('');
-    learnWrap.style.display = 'block';
-  }
-}
-
-// Update pool summary when switching to teamcomp tab
-const _origShowSection = window.showSection || null;
-
-// ── MANUAL COMP ──────────────────────────────────────────────
-let manualSelections = {Top:null,Jungle:null,Mid:null,Bot:null,Support:null};
-
 function renderManualSlots(){
   const el = document.getElementById('manualSlots');
   if(!el) return;
@@ -1328,37 +1220,99 @@ function deleteSavedComp(id){
   save(); renderSavedComps(); toast('Comp gelöscht.');
 }
 
-// ── KI COMP — proxy workaround ────────────────────────────────
-// Direct Anthropic API calls are blocked by CORS from browser.
-// We use a public CORS proxy. For production use Cloudflare Worker.
-async function callAI(prompt){
-  // Try direct first (works if CORS ever enabled), then proxy
-  const body = JSON.stringify({
-    model:'claude-sonnet-4-20250514',
-    max_tokens:1500,
-    messages:[{role:'user',content:prompt}]
-  });
-
-  // Use a Cloudflare worker proxy — update this URL after you set up your worker
-  const PROXY = 'https://rg-ai-proxy.ben49216.workers.dev';
+// ── CHAMPION INFO MODAL ──────────────────────────────────────
+async function openChampInfo(elOrId, champName){
+  let champId, cName;
+  if(typeof elOrId === 'string'){
+    champId = elOrId; cName = champName;
+  } else {
+    champId = elOrId.dataset.id || elOrId.closest('[data-id]')?.dataset.id;
+    cName = elOrId.dataset.name || elOrId.closest('[data-name]')?.dataset.name || champId;
+  }
+  const modal = document.getElementById('champInfoModal');
+  const loading = document.getElementById('champModalLoading');
+  const content = document.getElementById('champModalContent');
+  modal.style.display = 'flex';
+  loading.style.display = 'block';
+  content.style.display = 'none';
 
   try {
-    const r = await fetch(PROXY, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body
-    });
-    if(!r.ok) throw new Error(`HTTP ${r.status}`);
-    return await r.json();
+    // Fetch from Data Dragon
+    const res = await fetch(`https://ddragon.leagueoflegends.com/cdn/${DDV}/data/de_DE/champion/${champId}.json`);
+    const data = await res.json();
+    const d = data.data[champId];
+
+    // Splash image
+    document.getElementById('cmi-splash').src = `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champId}_0.jpg`;
+    document.getElementById('cmi-name').textContent = d.name;
+    document.getElementById('cmi-title').textContent = d.title;
+
+    // Links
+    const uggName = cName.toLowerCase().replace(/[^a-z0-9]/g,'').replace('wukong','monkeyking');
+    document.getElementById('cmi-links').innerHTML = `
+      <a href="https://u.gg/lol/champions/${uggName}/build" target="_blank" class="champ-link-btn champ-link-ugg">📊 u.gg Build</a>
+      <a href="https://www.probuilds.net/champions/details/${champId}" target="_blank" class="champ-link-btn champ-link-wiki">🏆 Pro Builds</a>
+      <a href="https://leagueoflegends.fandom.com/wiki/${cName.replace(/ /g,'_')}" target="_blank" class="champ-link-btn champ-link-wiki">📖 Wiki</a>
+    `;
+
+    // Tags
+    document.getElementById('cmi-tags').innerHTML = (d.tags||[]).map(t=>`<span class="champ-tag-badge">${t}</span>`).join('');
+
+    // Stats
+    const stats = d.stats;
+    const statItems = [
+      {label:'HP',val:Math.round(stats.hp)},
+      {label:'HP/Lvl',val:'+'+Math.round(stats.hpperlevel)},
+      {label:'AD',val:Math.round(stats.attackdamage)},
+      {label:'AS',val:stats.attackspeedbase?.toFixed(2)||'—'},
+      {label:'Armor',val:Math.round(stats.armor)},
+      {label:'MR',val:Math.round(stats.spellblock)},
+      {label:'Range',val:Math.round(stats.attackrange)},
+      {label:'MS',val:Math.round(stats.movespeed)},
+      {label:'Mana',val:Math.round(stats.mp)||'—'},
+    ];
+    document.getElementById('cmi-stats').innerHTML = statItems.map(s=>`
+      <div class="champ-stat">
+        <div class="champ-stat-val">${s.val}</div>
+        <div class="champ-stat-label">${s.label}</div>
+      </div>`).join('');
+
+    // Skills
+    const keys = ['P','Q','W','E','R'];
+    const spells = [d.passive, ...d.spells];
+    document.getElementById('cmi-skills').innerHTML = spells.map((sp,i)=>{
+      const spImg = i===0
+        ? `https://ddragon.leagueoflegends.com/cdn/${DDV}/img/passive/${sp.image?.full||sp.id+'.png'}`
+        : `https://ddragon.leagueoflegends.com/cdn/${DDV}/img/spell/${sp.image?.full||sp.id+'.png'}`;
+      const desc = (sp.description||sp.sanitizedDescription||'').replace(/<[^>]*>/g,'');
+      return `<div class="champ-skill">
+        <div class="champ-skill-key">${keys[i]}</div>
+        <div class="champ-skill-img"><img src="${spImg}" loading="lazy" onerror="this.style.display='none'"></div>
+        <div class="champ-skill-info">
+          <div class="champ-skill-name">${sp.name}</div>
+          <div class="champ-skill-desc">${desc}</div>
+        </div>
+      </div>`;
+    }).join('');
+
+    // Lore
+    document.getElementById('cmi-lore').textContent = d.lore || '';
+
+    loading.style.display = 'none';
+    content.style.display = 'block';
+
   } catch(e) {
-    throw new Error('KI nicht erreichbar. Bitte Cloudflare Worker einrichten.');
+    loading.innerHTML = `<p style="color:var(--red)">Fehler beim Laden: ${e.message}</p>`;
   }
+}
+
+function closeChampModal(e){
+  if(e.target.id==='champInfoModal') document.getElementById('champInfoModal').style.display='none';
 }
 
 // ── INIT ─────────────────────────────────────────────────────
 // Expose render functions for Firebase listener
 window._renderPlayers = renderPlayers;
-window._renderCompPoolSummary = renderCompPoolSummary;
 window._renderTodo = renderTodo;
 window._renderBrowser = renderBrowser;
 
