@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rising Generation — Team Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+  import { getDatabase, ref, onValue, set, update } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+  window._fbReady = false;
+  const firebaseConfig = {
+    databaseURL: "https://rg-team-hub-default-rtdb.europe-west1.firebasedatabase.app"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  window._db = db;
+  window._ref = ref;
+  window._set = set;
+  window._update = update;
+  window._onValue = onValue;
+  window._fbReady = true;
+  // Listen for all changes and sync to local state
+  onValue(ref(db, 'hub'), (snapshot) => {
+    const data = snapshot.val();
+    if(data) {
+      // Merge: keep player avatars/roles from default, update pool+todos from firebase
+      if(data.players) {
+        data.players.forEach(fp => {
+          const lp = window._S.players.find(p => p.id === fp.id);
+          if(lp) lp.pool = fp.pool || [];
+        });
+      }
+      if(data.todos) window._S.todos = data.todos;
+      if(data.teamName) {
+        window._S.teamName = data.teamName;
+        document.getElementById('teamNameDisplay').textContent = data.teamName;
+      }
+      if(typeof window._renderPlayers === 'function') window._renderPlayers();
+      if(typeof window._renderTodo === 'function') window._renderTodo();
+      if(typeof window._renderBrowser === 'function') window._renderBrowser();
+    }
+  });
+</script>
+<style>
+:root{
+  --gold:#C89B3C;--gold-light:#F0E6D3;--gold-dark:#785A28;
+  --blue:#0AC8B9;--blue-dark:#0A323C;
+  --bg:#010A13;--bg2:#0D1117;--bg3:#111927;--bg4:#1E2936;
+  --text:#A09B8C;--text-light:#C8AA6E;--text-bright:#F0E6D3;
+  --red:#C63B3B;--border:rgba(120,90,40,0.35);
+  --top:#e2a553;--jgl:#4caf7a;--mid:#0AC8B9;--bot:#b08be8;--sup:#e88b8b;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);font-family:'Exo 2',sans-serif;color:var(--text);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 20%,rgba(10,200,185,0.04) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 80% 80%,rgba(200,155,60,0.06) 0%,transparent 60%);pointer-events:none;z-index:0;}
+
+header{position:sticky;top:0;z-index:100;padding:0 1rem;border-bottom:1px solid var(--border);background:rgba(1,10,19,0.97);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:space-between;height:56px;}
+.logo{font-family:'Cinzel',serif;font-weight:900;font-size:1.1rem;color:var(--gold-light);letter-spacing:0.12em;display:flex;align-items:center;gap:8px;}
+.logo-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--gold-dark),var(--gold));clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--bg);font-weight:900;}
+
+nav{position:sticky;top:56px;z-index:99;display:flex;padding:0 1rem;background:rgba(13,17,23,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch;}
+nav button{background:none;border:none;cursor:pointer;padding:.85rem 1rem;font-family:'Exo 2',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text);position:relative;transition:color 0.2s;white-space:nowrap;}
+nav button::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform 0.2s;}
+nav button:hover{color:var(--text-light);}
+nav button.active{color:var(--gold-light);}
+nav button.active::after{transform:scaleX(1);}
+
+main{position:relative;z-index:1;max-width:1500px;margin:0 auto;padding:1.5rem 1rem;}@media(min-width:640px){main{padding:2.5rem 2rem;}}
+.section{display:none;animation:fadeUp 0.3s ease;}
+.section.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+.section-header{display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem;flex-wrap:wrap;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+.section-title{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:600;color:var(--text-bright);letter-spacing:0.08em;}
+.section-title span{font-size:0.72rem;font-family:'Exo 2',sans-serif;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;font-weight:400;display:block;margin-bottom:5px;}
+
+.btn{display:inline-flex;align-items:center;gap:6px;padding:.5rem 1.2rem;font-family:'Exo 2',sans-serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;cursor:pointer;border-radius:3px;transition:all .2s;border:none;}
+.btn-gold{background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:var(--bg);}
+.btn-gold:hover{filter:brightness(1.15);transform:translateY(-1px);}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text);}
+.btn-outline:hover{border-color:var(--gold-dark);color:var(--text-light);}
+.btn-sm{padding:3px 12px;font-size:.7rem;}
+
+input,select{background:var(--bg4);border:1px solid var(--border);color:var(--text-bright);padding:.5rem .75rem;font-family:'Exo 2',sans-serif;font-size:.85rem;border-radius:3px;outline:none;transition:border-color .2s;width:100%;}
+input:focus,select:focus{border-color:var(--gold-dark);}
+select option{background:var(--bg4);}
+
+#toast{position:fixed;bottom:1rem;right:1rem;left:1rem;text-align:center;background:var(--bg3);border:1px solid var(--gold-dark);padding:.75rem 1.4rem;border-radius:4px;font-size:.82rem;color:var(--text-light);z-index:1000;transform:translateY(80px);opacity:0;transition:all .3s;box-shadow:0 8px 32px rgba(0,0,0,.5);}@media(min-width:500px){#toast{left:auto;right:2rem;text-align:left;}}
+#toast.show{transform:translateY(0);opacity:1;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg2);}::-webkit-scrollbar-thumb{background:var(--gold-dark);border-radius:3px;}
+
+/* ── PLAYER CARDS ── */
+.player-grid{display:grid;grid-template-columns:1fr;gap:1.2rem;}@media(min-width:720px){.player-grid{grid-template-columns:repeat(auto-fill,minmax(340px,1fr));}}
+
+.player-card{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:6px;overflow:hidden;
+  transition:border-color .2s,box-shadow .2s;
+  display:flex;flex-direction:column;
+}
+.player-card::before{content:'';display:block;height:3px;}
+.player-card[data-role="Top"]::before{background:linear-gradient(90deg,transparent,var(--top),transparent);}
+.player-card[data-role="Jungle"]::before{background:linear-gradient(90deg,transparent,var(--jgl),transparent);}
+.player-card[data-role="Mid"]::before{background:linear-gradient(90deg,transparent,var(--mid),transparent);}
+.player-card[data-role="Bot"]::before{background:linear-gradient(90deg,transparent,var(--bot),transparent);}
+.player-card[data-role="Support"]::before{background:linear-gradient(90deg,transparent,var(--sup),transparent);}
+.player-card:hover{border-color:rgba(200,155,60,.4);box-shadow:0 6px 28px rgba(0,0,0,.3);}
+
+.player-head{display:flex;align-items:center;gap:1rem;padding:1.2rem 1.4rem 1rem;}
+.player-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--bg4),var(--blue-dark));border:2px solid var(--gold-dark);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:1.2rem;color:var(--gold);flex-shrink:0;overflow:hidden;}
+.av-fallback{display:flex;align-items:center;justify-content:center;width:100%;height:100%;}
+.player-meta{flex:1;min-width:0;}
+.player-name{font-family:'Cinzel',serif;font-size:1rem;color:var(--text-bright);margin-bottom:4px;}
+.role-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:2px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;}
+.role-Top{background:rgba(226,165,83,.15);color:var(--top);border:1px solid rgba(226,165,83,.3);}
+.role-Jungle{background:rgba(76,175,122,.12);color:var(--jgl);border:1px solid rgba(76,175,122,.3);}
+.role-Mid{background:rgba(10,200,185,.1);color:var(--mid);border:1px solid rgba(10,200,185,.3);}
+.role-Bot{background:rgba(176,139,232,.1);color:var(--bot);border:1px solid rgba(176,139,232,.3);}
+.role-Support{background:rgba(232,139,139,.1);color:var(--sup);border:1px solid rgba(232,139,139,.3);}
+
+.player-rank{font-size:.72rem;color:var(--text);margin-top:4px;}
+
+/* CHAMPION MINI-TABLE inside player card */
+.champ-table-wrap{padding:0 1.4rem 1.2rem;}
+.champ-table-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text);font-weight:600;margin-bottom:.5rem;display:flex;align-items:center;justify-content:space-between;}
+.champ-table-label span{color:var(--text);}
+.champ-add-btn{background:none;border:1px dashed rgba(200,155,60,.3);color:var(--gold-dark);padding:2px 8px;border-radius:2px;cursor:pointer;font-size:.68rem;font-family:'Exo 2',sans-serif;font-weight:600;transition:all .15s;}
+.champ-add-btn:hover{border-color:var(--gold);color:var(--gold);}
+
+.champ-table{display:grid;grid-template-columns:1fr 1fr;gap:4px;}
+.champ-row{display:flex;align-items:center;gap:8px;background:var(--bg4);border:1px solid var(--border);border-radius:3px;padding:4px 8px 4px 4px;transition:border-color .15s;}
+.champ-row:hover{border-color:rgba(200,155,60,.3);}
+.champ-row-img{width:32px;height:32px;border-radius:2px;overflow:hidden;flex-shrink:0;background:var(--bg);border:1px solid var(--border);}
+.champ-row-img img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
+.champ-row-name{flex:1;font-size:.72rem;color:var(--text-bright);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;}
+.champ-row-role{font-size:.62rem;color:var(--text);background:var(--bg3);padding:1px 6px;border-radius:2px;border:1px solid var(--border);}
+.champ-row-del{background:none;border:none;color:var(--red);cursor:pointer;font-size:.65rem;opacity:0;transition:opacity .15s;padding:2px 4px;}
+.champ-row:hover .champ-row-del{opacity:1;}
+
+.champ-empty{font-size:.74rem;color:var(--text);opacity:.4;padding:.5rem 0;text-align:center;font-style:italic;grid-column:1/-1;}
+
+/* ── TODO ── */
+.todo-grid{display:grid;grid-template-columns:1fr;gap:1rem;}@media(min-width:500px){.todo-grid{grid-template-columns:1fr 1fr;}}@media(min-width:900px){.todo-grid{grid-template-columns:repeat(3,1fr);}}@media(min-width:1200px){.todo-grid{grid-template-columns:repeat(5,1fr);}}
+.todo-col{background:var(--bg3);border:1px solid var(--border);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;min-height:280px;}@media(min-width:1200px){.todo-col{min-height:520px;}}
+.todo-col-header{padding:1.1rem 1.2rem;display:flex;align-items:center;gap:10px;border-bottom:2px solid;}
+.todo-role-icon{font-size:1.2rem;}
+.todo-role-label{font-family:'Cinzel',serif;font-size:.82rem;font-weight:600;letter-spacing:.08em;flex:1;}
+.todo-count{font-size:.66rem;min-width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;padding:0 4px;}
+.todo-col[data-role="Top"] .todo-col-header{border-color:var(--top);background:rgba(226,165,83,.05);}
+.todo-col[data-role="Jungle"] .todo-col-header{border-color:var(--jgl);background:rgba(76,175,122,.05);}
+.todo-col[data-role="Mid"] .todo-col-header{border-color:var(--mid);background:rgba(10,200,185,.05);}
+.todo-col[data-role="Bot"] .todo-col-header{border-color:var(--bot);background:rgba(176,139,232,.05);}
+.todo-col[data-role="Support"] .todo-col-header{border-color:var(--sup);background:rgba(232,139,139,.05);}
+.todo-col[data-role="Top"] .todo-role-label{color:var(--top);}
+.todo-col[data-role="Jungle"] .todo-role-label{color:var(--jgl);}
+.todo-col[data-role="Mid"] .todo-role-label{color:var(--mid);}
+.todo-col[data-role="Bot"] .todo-role-label{color:var(--bot);}
+.todo-col[data-role="Support"] .todo-role-label{color:var(--sup);}
+.todo-col[data-role="Top"] .todo-count{color:var(--top);background:rgba(226,165,83,.12);}
+.todo-col[data-role="Jungle"] .todo-count{color:var(--jgl);background:rgba(76,175,122,.12);}
+.todo-col[data-role="Mid"] .todo-count{color:var(--mid);background:rgba(10,200,185,.12);}
+.todo-col[data-role="Bot"] .todo-count{color:var(--bot);background:rgba(176,139,232,.12);}
+.todo-col[data-role="Support"] .todo-count{color:var(--sup);background:rgba(232,139,139,.12);}
+.todo-items{padding:1rem 1rem .5rem;flex:1;display:flex;flex-direction:column;gap:8px;}
+.todo-empty-hint{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:12px;opacity:.18;padding:2rem 0;}
+.todo-empty-icon{font-size:2.2rem;}
+.todo-empty-txt{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;}
+.todo-item{display:flex;align-items:flex-start;gap:9px;background:var(--bg4);border:1px solid var(--border);border-radius:4px;padding:9px 10px;cursor:pointer;transition:all .15s;}
+.todo-item:hover{border-color:rgba(200,155,60,.3);}
+.todo-item.done{opacity:.45;}
+.todo-item.done .todo-text{text-decoration:line-through;}
+.todo-check{width:17px;height:17px;border-radius:3px;border:1.5px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;margin-top:1px;transition:all .15s;}
+.todo-item.done .todo-check{border-color:var(--gold);background:var(--gold);color:var(--bg);}
+.todo-text{font-size:.8rem;line-height:1.45;flex:1;color:var(--text-bright);}
+.todo-del{background:none;border:none;cursor:pointer;color:var(--red);font-size:.65rem;opacity:0;padding:0 2px;transition:opacity .15s;flex-shrink:0;}
+.todo-item:hover .todo-del{opacity:1;}
+.todo-add{padding:.75rem 1rem 1rem;display:flex;gap:7px;margin-top:auto;}
+.todo-add input{font-size:.78rem;padding:7px 10px;}
+.todo-add-btn{background:var(--bg4);border:1px solid var(--border);color:var(--text-light);width:34px;height:34px;flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:3px;font-size:1.1rem;transition:all .15s;}
+.todo-add-btn:hover{border-color:var(--gold-dark);color:var(--gold);}
+
+/* ── CHAMPION BROWSER (full page tab) ── */
+.browser-layout{display:grid;grid-template-columns:1fr;gap:1rem;}@media(min-width:860px){.browser-layout{grid-template-columns:200px 1fr;}}
+.browser-sidebar{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:1rem;display:flex;flex-direction:column;gap:6px;}@media(max-width:859px){.browser-sidebar{flex-direction:row;flex-wrap:wrap;gap:6px;padding:.75rem;}}
+.browser-sidebar-title{font-family:'Cinzel',serif;font-size:.82rem;color:var(--text-light);margin-bottom:4px;}
+.player-filter-btn{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:3px;background:var(--bg4);border:1px solid var(--border);cursor:pointer;font-family:'Exo 2',sans-serif;font-size:.75rem;font-weight:600;color:var(--text);width:100%;text-align:left;transition:all .15s;}@media(max-width:859px){.player-filter-btn{width:auto;}}
+.player-filter-btn.active{border-color:var(--gold);color:var(--gold-light);background:rgba(200,155,60,.08);}
+.player-filter-btn:hover{border-color:var(--gold-dark);color:var(--text-bright);}
+.pf-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.pf-Top{background:var(--top);}.pf-Jungle{background:var(--jgl);}.pf-Mid{background:var(--mid);}.pf-Bot{background:var(--bot);}.pf-Support{background:var(--sup);}
+
+.browser-main{display:flex;flex-direction:column;gap:1rem;}
+.browser-bar{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:.9rem 1.1rem;display:flex;gap:10px;align-items:center;}
+.browser-search-wrap{position:relative;flex:1;}
+.browser-search-wrap input{padding-left:32px;}
+.browser-search-wrap::before{content:'🔍';position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:.72rem;pointer-events:none;}
+.browser-count{font-size:.72rem;color:var(--text);white-space:nowrap;}
+
+.role-filter-bar{display:flex;gap:6px;flex-wrap:wrap;}
+.rfb{background:var(--bg4);border:1px solid var(--border);color:var(--text);padding:5px 12px;border-radius:3px;cursor:pointer;font-family:'Exo 2',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.06em;transition:all .15s;}
+.rfb:hover{border-color:var(--gold-dark);color:var(--text-light);}
+.rfb.active{background:rgba(200,155,60,.1);border-color:var(--gold);color:var(--gold-light);}
+.rfb[data-rf="Top"].active{background:rgba(226,165,83,.1);border-color:var(--top);color:var(--top);}
+.rfb[data-rf="Jungle"].active{background:rgba(76,175,122,.1);border-color:var(--jgl);color:var(--jgl);}
+.rfb[data-rf="Mid"].active{background:rgba(10,200,185,.1);border-color:var(--mid);color:var(--mid);}
+.rfb[data-rf="Bot"].active{background:rgba(176,139,232,.1);border-color:var(--bot);color:var(--bot);}
+.rfb[data-rf="Support"].active{background:rgba(232,139,139,.1);border-color:var(--sup);color:var(--sup);}
+.champ-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:7px;}@media(min-width:640px){.champ-grid{grid-template-columns:repeat(auto-fill,minmax(82px,1fr));gap:9px;}}
+.champ-tile{background:var(--bg4);border:1px solid var(--border);border-radius:4px;cursor:pointer;transition:all .18s;position:relative;display:flex;flex-direction:column;overflow:hidden;}
+.champ-tile:hover{border-color:rgba(200,155,60,.6);transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.5);}
+.champ-tile.owned{border-color:var(--gold-dark);}
+.champ-tile.owned::after{content:'✓';position:absolute;top:3px;right:4px;font-size:.65rem;color:var(--gold);font-weight:900;text-shadow:0 0 6px rgba(200,155,60,1);}
+.ct-img{position:relative;width:100%;padding-top:88%;overflow:hidden;background:var(--bg);}
+.ct-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform .25s;}
+.champ-tile:hover .ct-img img{transform:scale(1.08);}
+.ct-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:1.4rem;color:var(--gold-dark);background:var(--bg3);font-weight:700;}
+.cr-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:1rem;color:var(--gold-dark);background:var(--bg3);font-weight:700;}
+.ct-name{padding:4px 5px 3px;font-size:.6rem;font-weight:600;color:var(--text-bright);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center;background:var(--bg3);border-top:1px solid var(--border);}
+.ct-roles{display:flex;justify-content:center;gap:3px;padding:3px 4px;background:var(--bg3);}
+.ct-role-dot{width:6px;height:6px;border-radius:50%;}
+.ct-Top{background:var(--top);}.ct-Jungle{background:var(--jgl);}.ct-Mid{background:var(--mid);}.ct-Bot{background:var(--bot);}.ct-Support{background:var(--sup);}
+
+/* ROLE POPUP */
+.role-popup{position:fixed;z-index:500;background:var(--bg3);border:1px solid var(--gold-dark);border-radius:6px;padding:1rem 1.1rem;box-shadow:0 16px 48px rgba(0,0,0,.85);min-width:200px;animation:fadeUp .16s ease;}
+.role-popup h4{font-family:'Cinzel',serif;font-size:.82rem;color:var(--text-bright);margin-bottom:.7rem;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.rp-player-label{font-size:.66rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:.5rem;font-weight:600;}
+.rp-btns{display:flex;flex-direction:column;gap:4px;}
+.rp-btn{padding:7px 11px;border-radius:3px;background:var(--bg4);border:1px solid var(--border);cursor:pointer;font-family:'Exo 2',sans-serif;font-size:.76rem;font-weight:600;color:var(--text);text-align:left;transition:all .15s;display:flex;align-items:center;gap:8px;width:100%;}
+.rp-btn:hover{background:rgba(200,155,60,.06);border-color:var(--gold-dark);color:var(--text-bright);}
+.rp-btn.already{color:var(--gold);border-color:var(--gold-dark);background:rgba(200,155,60,.08);}
+.rp-btn.already::after{content:'✓';margin-left:auto;font-size:.7rem;}
+.rp-cancel{margin-top:6px;padding:5px;border-radius:3px;background:none;border:1px solid var(--border);cursor:pointer;font-family:'Exo 2',sans-serif;font-size:.7rem;color:var(--text);width:100%;text-align:center;transition:color .15s;}
+.rp-cancel:hover{color:var(--red);}
+
+#toast{position:fixed;bottom:1rem;right:1rem;left:1rem;text-align:center;background:var(--bg3);border:1px solid var(--gold-dark);padding:.75rem 1.4rem;border-radius:4px;font-size:.82rem;color:var(--text-light);z-index:2000;transform:translateY(80px);opacity:0;transition:all .3s;box-shadow:0 8px 32px rgba(0,0,0,.5);}@media(min-width:500px){#toast{left:auto;right:2rem;text-align:left;}}
+#toast.show{transform:translateY(0);opacity:1;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">⚔</div>
+    <span id="teamNameDisplay">RISING GENERATION</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;">
+  <div id="syncStatus" style="display:flex;align-items:center;gap:5px;font-size:.65rem;color:var(--text);">
+    <span id="syncDot" style="width:7px;height:7px;border-radius:50%;background:#555;display:inline-block;"></span>
+    <span id="syncLabel">Verbinde…</span>
+  </div>
+  <button class="btn btn-outline" onclick="editTeamName()" style="font-size:.72rem;padding:5px 12px;">Umbenennen</button>
+</div>
+</header>
+
+<nav>
+  <button class="active" onclick="showSection('players',this)">⚔ Spieler & Champs</button>
+  <button onclick="showSection('todo',this)">✅ To-Do</button>
+  <button onclick="showSection('browser',this)">🔍 Champion Browser</button>
+</nav>
+
+<main>
+
+  <!-- ══ PLAYERS ══ -->
+  <div id="players" class="section active">
+    <div class="section-header">
+      <div class="section-title"><span>Rising Generation</span>Spieler & Champion-Pool</div>
+      <div style="font-size:.75rem;color:var(--text);">Champions über den Browser zuweisen →</div>
+    </div>
+    <div id="playerList" class="player-grid"></div>
+  </div>
+
+  <!-- ══ TODO ══ -->
+  <div id="todo" class="section">
+    <div class="section-header">
+      <div class="section-title"><span>Aufgaben</span>Team To-Do</div>
+      <button class="btn btn-outline btn-sm" onclick="clearDone()">✓ Erledigte löschen</button>
+    </div>
+    <div class="todo-grid" id="todoGrid"></div>
+  </div>
+
+  <!-- ══ CHAMPION BROWSER ══ -->
+  <div id="browser" class="section">
+    <div class="section-header">
+      <div class="section-title"><span>Champion zuweisen</span>Champion Browser</div>
+    </div>
+    <div class="browser-layout">
+      <!-- sidebar: welchem Spieler zuweisen -->
+      <div class="browser-sidebar">
+        <div class="browser-sidebar-title">Zuweisen an…</div>
+        <div id="playerFilterBtns"></div>
+        <div style="margin-top:8px;font-size:.68rem;color:var(--text);line-height:1.7;">
+          💡 Spieler wählen → Champion klicken<br>
+          Ein Champ kann mehreren Spielern gehören
+        </div>
+      </div>
+      <!-- main grid -->
+      <div class="browser-main">
+        <div class="browser-bar">
+          <div class="browser-search-wrap" style="flex:1;">
+            <input type="text" id="champSearch" placeholder="Champion suchen…" oninput="renderBrowser()">
+          </div>
+          <div class="browser-count" id="champCount">— Champions</div>
+        </div>
+        <div class="role-filter-bar" id="roleFilterBar">
+          <button class="rfb active" data-rf="All"     onclick="setRoleFilter('All',this)">Alle</button>
+          <button class="rfb"        data-rf="Top"     onclick="setRoleFilter('Top',this)">🛡 Top</button>
+          <button class="rfb"        data-rf="Jungle"  onclick="setRoleFilter('Jungle',this)">🌿 Jungle</button>
+          <button class="rfb"        data-rf="Mid"     onclick="setRoleFilter('Mid',this)">⚡ Mid</button>
+          <button class="rfb"        data-rf="Bot"     onclick="setRoleFilter('Bot',this)">🎯 Bot</button>
+          <button class="rfb"        data-rf="Support" onclick="setRoleFilter('Support',this)">💊 Support</button>
+        </div>
+        <div class="champ-grid" id="champGrid"></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div id="toast"></div>
+
+<!-- no role popup needed -->
+
+<script>
+// ── CHAMPION LIST ─────────────────────────────────────────────
+// Format: [id, displayName, [...roles]]
+const ALL_CHAMPS = [
+  ["Aatrox","Aatrox",["Top"]],
+  ["Ahri","Ahri",["Mid"]],
+  ["Akali","Akali",["Mid","Top"]],
+  ["Akshan","Akshan",["Mid","Top"]],
+  ["Alistar","Alistar",["Support"]],
+  ["Amumu","Amumu",["Jungle","Support"]],
+  ["Anivia","Anivia",["Mid"]],
+  ["Annie","Annie",["Mid","Support"]],
+  ["Aphelios","Aphelios",["Bot"]],
+  ["Ashe","Ashe",["Bot","Support"]],
+  ["AurelionSol","Aurelion Sol",["Mid"]],
+  ["Azir","Azir",["Mid"]],
+  ["Bard","Bard",["Support"]],
+  ["Belveth","Bel'Veth",["Jungle"]],
+  ["Blitzcrank","Blitzcrank",["Support"]],
+  ["Brand","Brand",["Support","Mid"]],
+  ["Braum","Braum",["Support"]],
+  ["Briar","Briar",["Jungle","Top"]],
+  ["Caitlyn","Caitlyn",["Bot"]],
+  ["Camille","Camille",["Top"]],
+  ["Cassiopeia","Cassiopeia",["Mid"]],
+  ["Chogath","Cho'Gath",["Top","Mid"]],
+  ["Corki","Corki",["Mid","Bot"]],
+  ["Darius","Darius",["Top"]],
+  ["Diana","Diana",["Jungle","Mid"]],
+  ["Draven","Draven",["Bot"]],
+  ["DrMundo","Dr. Mundo",["Top","Jungle"]],
+  ["Ekko","Ekko",["Jungle","Mid"]],
+  ["Elise","Elise",["Jungle"]],
+  ["Evelynn","Evelynn",["Jungle"]],
+  ["Ezreal","Ezreal",["Bot","Mid"]],
+  ["Fiddlesticks","Fiddlesticks",["Jungle","Support"]],
+  ["Fiora","Fiora",["Top"]],
+  ["Fizz","Fizz",["Mid"]],
+  ["Galio","Galio",["Mid","Support"]],
+  ["Gangplank","Gangplank",["Top"]],
+  ["Garen","Garen",["Top"]],
+  ["Gnar","Gnar",["Top"]],
+  ["Gragas","Gragas",["Jungle","Top","Support"]],
+  ["Graves","Graves",["Jungle"]],
+  ["Gwen","Gwen",["Top","Jungle"]],
+  ["Hecarim","Hecarim",["Jungle"]],
+  ["Heimerdinger","Heimerdinger",["Mid","Top","Bot"]],
+  ["Hwei","Hwei",["Mid","Support"]],
+  ["Illaoi","Illaoi",["Top"]],
+  ["Irelia","Irelia",["Top","Mid"]],
+  ["Ivern","Ivern",["Jungle","Support"]],
+  ["Janna","Janna",["Support"]],
+  ["JarvanIV","Jarvan IV",["Jungle"]],
+  ["Jax","Jax",["Top","Jungle"]],
+  ["Jayce","Jayce",["Top","Mid"]],
+  ["Jhin","Jhin",["Bot"]],
+  ["Jinx","Jinx",["Bot"]],
+  ["Kaisa","Kai'Sa",["Bot"]],
+  ["Kalista","Kalista",["Bot"]],
+  ["Karma","Karma",["Support","Mid"]],
+  ["Karthus","Karthus",["Jungle","Mid","Bot"]],
+  ["Kassadin","Kassadin",["Mid"]],
+  ["Katarina","Katarina",["Mid"]],
+  ["Kayle","Kayle",["Top","Mid"]],
+  ["Kayn","Kayn",["Jungle"]],
+  ["Kennen","Kennen",["Top"]],
+  ["Khazix","Kha'Zix",["Jungle"]],
+  ["Kindred","Kindred",["Jungle"]],
+  ["Kled","Kled",["Top"]],
+  ["KogMaw","Kog'Maw",["Bot"]],
+  ["KSante","K'Sante",["Top"]],
+  ["Leblanc","LeBlanc",["Mid","Support"]],
+  ["LeeSin","Lee Sin",["Jungle"]],
+  ["Leona","Leona",["Support"]],
+  ["Lillia","Lillia",["Jungle"]],
+  ["Lissandra","Lissandra",["Mid","Support"]],
+  ["Lucian","Lucian",["Bot","Mid"]],
+  ["Lulu","Lulu",["Support","Top"]],
+  ["Lux","Lux",["Support","Mid"]],
+  ["Malphite","Malphite",["Top","Support"]],
+  ["Malzahar","Malzahar",["Mid"]],
+  ["Maokai","Maokai",["Support","Top","Jungle"]],
+  ["MasterYi","Master Yi",["Jungle"]],
+  ["Milio","Milio",["Support"]],
+  ["MissFortune","Miss Fortune",["Bot","Support"]],
+  ["MonkeyKing","Wukong",["Jungle","Top"]],
+  ["Mordekaiser","Mordekaiser",["Top"]],
+  ["Morgana","Morgana",["Support","Mid"]],
+  ["Naafiri","Naafiri",["Mid"]],
+  ["Nami","Nami",["Support"]],
+  ["Nasus","Nasus",["Top"]],
+  ["Nautilus","Nautilus",["Support","Jungle"]],
+  ["Neeko","Neeko",["Mid","Support","Top"]],
+  ["Nidalee","Nidalee",["Jungle"]],
+  ["Nilah","Nilah",["Bot"]],
+  ["Nocturne","Nocturne",["Jungle","Top"]],
+  ["Nunu","Nunu & Willump",["Jungle"]],
+  ["Olaf","Olaf",["Jungle","Top"]],
+  ["Orianna","Orianna",["Mid"]],
+  ["Ornn","Ornn",["Top"]],
+  ["Pantheon","Pantheon",["Top","Support","Mid"]],
+  ["Poppy","Poppy",["Top","Jungle","Support"]],
+  ["Pyke","Pyke",["Support"]],
+  ["Qiyana","Qiyana",["Mid"]],
+  ["Quinn","Quinn",["Top"]],
+  ["Rakan","Rakan",["Support"]],
+  ["Rammus","Rammus",["Jungle"]],
+  ["RekSai","Rek'Sai",["Jungle"]],
+  ["Rell","Rell",["Support","Jungle"]],
+  ["Renata","Renata Glasc",["Support"]],
+  ["Renekton","Renekton",["Top"]],
+  ["Rengar","Rengar",["Jungle","Top"]],
+  ["Riven","Riven",["Top"]],
+  ["Rumble","Rumble",["Top","Mid"]],
+  ["Ryze","Ryze",["Mid","Top"]],
+  ["Samira","Samira",["Bot"]],
+  ["Sejuani","Sejuani",["Jungle"]],
+  ["Senna","Senna",["Support","Bot"]],
+  ["Seraphine","Seraphine",["Support","Mid","Bot"]],
+  ["Sett","Sett",["Top","Support","Jungle"]],
+  ["Shaco","Shaco",["Jungle","Support"]],
+  ["Shen","Shen",["Top","Support"]],
+  ["Shyvana","Shyvana",["Jungle"]],
+  ["Singed","Singed",["Top"]],
+  ["Sion","Sion",["Top","Support"]],
+  ["Sivir","Sivir",["Bot"]],
+  ["Skarner","Skarner",["Jungle"]],
+  ["Smolder","Smolder",["Bot"]],
+  ["Sona","Sona",["Support"]],
+  ["Soraka","Soraka",["Support"]],
+  ["Swain","Swain",["Support","Mid","Top"]],
+  ["Sylas","Sylas",["Mid","Jungle"]],
+  ["Syndra","Syndra",["Mid"]],
+  ["TahmKench","Tahm Kench",["Support","Top"]],
+  ["Taliyah","Taliyah",["Jungle","Mid"]],
+  ["Talon","Talon",["Mid","Jungle"]],
+  ["Taric","Taric",["Support"]],
+  ["Teemo","Teemo",["Top"]],
+  ["Thresh","Thresh",["Support"]],
+  ["Tristana","Tristana",["Bot","Mid"]],
+  ["Trundle","Trundle",["Jungle","Top","Support"]],
+  ["Tryndamere","Tryndamere",["Top","Jungle"]],
+  ["TwistedFate","Twisted Fate",["Mid"]],
+  ["Twitch","Twitch",["Bot","Jungle"]],
+  ["Udyr","Udyr",["Jungle","Top"]],
+  ["Urgot","Urgot",["Top"]],
+  ["Varus","Varus",["Bot","Mid","Support"]],
+  ["Vayne","Vayne",["Bot","Top"]],
+  ["Veigar","Veigar",["Mid","Support","Bot"]],
+  ["Velkoz","Vel'Koz",["Support","Mid"]],
+  ["Vex","Vex",["Mid"]],
+  ["Vi","Vi",["Jungle"]],
+  ["Viego","Viego",["Jungle"]],
+  ["Viktor","Viktor",["Mid"]],
+  ["Vladimir","Vladimir",["Mid","Top"]],
+  ["Volibear","Volibear",["Top","Jungle"]],
+  ["Warwick","Warwick",["Jungle","Top"]],
+  ["Xayah","Xayah",["Bot"]],
+  ["Xerath","Xerath",["Support","Mid"]],
+  ["XinZhao","Xin Zhao",["Jungle"]],
+  ["Yasuo","Yasuo",["Mid","Top","Bot"]],
+  ["Yone","Yone",["Mid","Top"]],
+  ["Yorick","Yorick",["Top"]],
+  ["Yuumi","Yuumi",["Support"]],
+  ["Zac","Zac",["Jungle"]],
+  ["Zed","Zed",["Mid","Jungle"]],
+  ["Zeri","Zeri",["Bot"]],
+  ["Ziggs","Ziggs",["Bot","Mid","Support"]],
+  ["Zilean","Zilean",["Support","Mid"]],
+  ["Zoe","Zoe",["Mid","Support"]],
+  ["Zyra","Zyra",["Support","Mid"]],
+  ["Ambessa","Ambessa",["Top","Jungle"]],
+  ["Aurora","Aurora",["Top","Mid"]]
+].sort((a,b)=>a[1].localeCompare(b[1]));
+
+// DDragon image URL — version fetched dynamically
+let DDV = '15.10.1';
+function img(id){ return `https://ddragon.leagueoflegends.com/cdn/${DDV}/img/champion/${id}.png`; }
+function imgFallback(el, name){ el.style.display='none'; el.nextElementSibling.style.display='flex'; }
+(async()=>{
+  try{
+    const r=await fetch('https://ddragon.leagueoflegends.com/api/versions.json');
+    const v=await r.json();
+    if(v&&v[0]){DDV=v[0];renderBrowser();renderPlayers();}
+  }catch(e){}
+})();
+
+// ── STATE ─────────────────────────────────────────────────────
+// pool per player: S.players[i].pool = [{champId, champName, role}]
+// A champion can appear in multiple players' pools, and a player can have
+// the same champion for multiple roles.
+// Default state — Firebase overwrites dynamically
+let S = {
+  teamName: 'RISING GENERATION',
+  players: [
+    {id:1, name:'RG Kicker',     role:'Top',     rank:'', pool:[], avatar:'Camille'},
+    {id:2, name:'RG Chidori',    role:'Jungle',  rank:'', pool:[], avatar:'Viego'},
+    {id:3, name:'RG Cubes',      role:'Mid',     rank:'', pool:[], avatar:'Katarina'},
+    {id:4, name:'RG Keenz',      role:'Bot',     rank:'', pool:[], avatar:'Jinx'},
+    {id:5, name:'RG Fireknight', role:'Support', rank:'', pool:[], avatar:'Thresh'}
+  ],
+  todos:{Top:[],Jungle:[],Mid:[],Bot:[],Support:[]}
+};
+window._S = S;
+
+// Sync status UI
+function setSyncStatus(ok){
+  const dot=document.getElementById('syncDot');
+  const lbl=document.getElementById('syncLabel');
+  if(!dot)return;
+  dot.style.background = ok ? '#4caf7a' : '#e88b8b';
+  lbl.textContent = ok ? 'Live' : 'Offline';
+}
+
+// Firebase save — writes only pool+todos+teamName (not avatars/roles which are fixed)
+function fbSave(){
+  if(!window._fbReady || !window._db){setSyncStatus(false);return;}
+  try{
+    const payload = {
+      teamName: S.teamName,
+      todos: S.todos,
+      players: S.players.map(p=>({id:p.id, pool:p.pool||[]}))
+    };
+    window._set(window._ref(window._db,'hub'), payload)
+      .then(()=>setSyncStatus(true))
+      .catch(()=>setSyncStatus(false));
+  }catch(e){setSyncStatus(false);}
+}
+
+// active player in browser (id)
+let activeBrowserPlayer = S.players[0].id;
+let pendingChamp = null; // {id, name}
+let activeRoleFilter = 'All';
+
+function save(){ fbSave(); }
+function toast(m){ const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200); }
+function showSection(id,btn){ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');if(id==='browser')renderBrowserSidebar(); }
+document.getElementById('teamNameDisplay').textContent=S.teamName;
+function editTeamName(){ const n=prompt('Team-Name:',S.teamName);if(n?.trim()){S.teamName=n.trim().toUpperCase();document.getElementById('teamNameDisplay').textContent=S.teamName;save();toast('Team-Name gespeichert!');} }
+
+const ROLE_ICONS={Top:'🛡',Jungle:'🌿',Mid:'⚡',Bot:'🎯',Support:'💊'};
+
+// ── PLAYERS ──────────────────────────────────────────────────
+function renderPlayers(){
+  document.getElementById('playerList').innerHTML = S.players.map(p=>`
+    <div class="player-card" data-role="${p.role}">
+      <div class="player-head">
+        <div class="player-avatar">
+          ${p.avatar
+            ? `<img src="${img(p.avatar)}" alt="${p.avatar}" style="width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:50%;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="av-fallback" style="display:none">${p.name.split(' ')[1]?.charAt(0)||p.name.charAt(0)}</span>`
+            : `<span>${p.name.split(' ')[1]?.charAt(0)||p.name.charAt(0)}</span>`
+          }
+        </div>
+        <div class="player-meta">
+          <div class="player-name">${p.name}</div>
+          <span class="role-badge role-${p.role}">${ROLE_ICONS[p.role]} ${p.role}</span>
+          ${p.rank?`<div class="player-rank">🏅 ${p.rank}</div>`:''}
+        </div>
+      </div>
+      <div class="champ-table-wrap">
+        <div class="champ-table-label">
+          <span>Champion Pool</span>
+          <button class="champ-add-btn" onclick="openBrowserFor(${p.id})">+ Champ hinzufügen</button>
+        </div>
+        <div class="champ-table">
+          ${p.pool.length===0
+            ? `<div class="champ-empty">Noch keine Champions — über Browser hinzufügen</div>`
+            : p.pool.map(c=>`
+              <div class="champ-row">
+                <div class="champ-row-img">
+                  <img src="${img(c.champId)}" alt="${c.champName}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="cr-fallback" style="display:none">${c.champName[0]}</div>
+                </div>
+                <span class="champ-row-name">${c.champName}</span>
+                <span class="champ-row-role">${c.role}</span>
+                <button class="champ-row-del" onclick="removeChamp(${p.id},'${c.champId}','${c.role}')">✕</button>
+              </div>`).join('')
+          }
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function openBrowserFor(playerId){
+  activeBrowserPlayer = playerId;
+  // switch to browser tab
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('browser').classList.add('active');
+  document.querySelectorAll('nav button')[2].classList.add('active');
+  renderBrowserSidebar();
+  renderBrowser();
+}
+
+function removeChamp(playerId, champId, role){
+  const p=S.players.find(p=>p.id===playerId);
+  if(!p)return;
+  p.pool=p.pool.filter(c=>!(c.champId===champId&&c.role===role));
+  save();renderPlayers();
+}
+
+// ── BROWSER ───────────────────────────────────────────────────
+function renderBrowserSidebar(){
+  document.getElementById('playerFilterBtns').innerHTML = S.players.map(p=>`
+    <button class="player-filter-btn${p.id===activeBrowserPlayer?' active':''}" onclick="setActivePlayer(${p.id})">
+      <span class="pf-dot pf-${p.role}"></span>
+      ${p.name}
+    </button>`).join('');
+}
+
+function setActivePlayer(id){
+  activeBrowserPlayer=id;
+  renderBrowserSidebar();
+  renderBrowser();
+}
+
+function setRoleFilter(role,btn){
+  activeRoleFilter=role;
+  document.querySelectorAll('.rfb').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderBrowser();
+}
+
+function renderBrowser(){
+  const q=(document.getElementById('champSearch')?.value||'').toLowerCase();
+  const player=S.players.find(p=>p.id===activeBrowserPlayer);
+  const ownedIds=new Set(player?player.pool.map(c=>c.champId):[]);
+  let list=ALL_CHAMPS;
+  if(activeRoleFilter!=='All') list=list.filter(([id,name,roles])=>roles&&roles.includes(activeRoleFilter));
+  if(q) list=list.filter(([id,name])=>name.toLowerCase().includes(q)||id.toLowerCase().includes(q));
+  document.getElementById('champCount').textContent=`${list.length} Champions`;
+  document.getElementById('champGrid').innerHTML=list.map(([id,name,roles])=>{
+    const safeName=name.replace(/'/g,"\\'").replace(/"/g,'&quot;');
+    const dots=(roles||[]).map(r=>`<span class="ct-role-dot ct-${r}"></span>`).join('');
+    return `<div class="champ-tile${ownedIds.has(id)?' owned':''}"
+         onclick="champClick('${id}','${safeName}',event)"
+         title="${name} — ${(roles||[]).join(' / ')}">
+      <div class="ct-img">
+        <img src="${img(id)}" alt="${name}" loading="lazy" onerror="imgFallback(this,'${name[0]}')"><div class="ct-fallback" style="display:none">${name[0]}</div>
+      </div>
+      <div class="ct-name">${name}</div>
+      <div class="ct-roles">${dots}</div>
+    </div>`;
+  }).join('');
+}
+
+function champClick(cId, cName, e){
+  const player = S.players.find(p=>p.id===activeBrowserPlayer);
+  if(!player) return;
+  // Use the player's own role directly — no popup needed
+  const role = player.role;
+  const idx = player.pool.findIndex(c=>c.champId===cId && c.role===role);
+  if(idx>=0){
+    player.pool.splice(idx,1);
+    toast(`${cName} entfernt`);
+  } else {
+    player.pool.push({champId:cId, champName:cName, role});
+    toast(`${cName} → ${player.name} ✓`);
+  }
+  save();
+  renderPlayers();
+  renderBrowser();
+}
+
+// ── TODO ─────────────────────────────────────────────────────
+const ROLES=['Top','Jungle','Mid','Bot','Support'];
+function renderTodo(){
+  document.getElementById('todoGrid').innerHTML=ROLES.map(role=>{
+    const items=S.todos[role]||[];
+    const pending=items.filter(t=>!t.done).length;
+    return`<div class="todo-col" data-role="${role}">
+      <div class="todo-col-header">
+        <span class="todo-role-icon">${ROLE_ICONS[role]}</span>
+        <span class="todo-role-label">${role}</span>
+        ${pending?`<span class="todo-count">${pending}</span>`:''}
+      </div>
+      <div class="todo-items">
+        ${items.length===0
+          ?`<div class="todo-empty-hint"><div class="todo-empty-icon">${ROLE_ICONS[role]}</div><div class="todo-empty-txt">Leer</div></div>`
+          :items.map(t=>`<div class="todo-item${t.done?' done':''}" onclick="toggleTodo('${role}',${t.id})">
+              <div class="todo-check">${t.done?'✓':''}</div>
+              <span class="todo-text">${t.text}</span>
+              <button class="todo-del" onclick="event.stopPropagation();delTodo('${role}',${t.id})">✕</button>
+            </div>`).join('')
+        }
+      </div>
+      <div class="todo-add">
+        <input type="text" id="tinp-${role}" placeholder="Aufgabe hinzufügen…" onkeydown="if(event.key==='Enter')addTodo('${role}')">
+        <button class="todo-add-btn" onclick="addTodo('${role}')">+</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function addTodo(r){const i=document.getElementById(`tinp-${r}`);const t=i.value.trim();if(!t)return;if(!S.todos[r])S.todos[r]=[];S.todos[r].push({id:Date.now(),text:t,done:false});i.value='';save();renderTodo();}
+function toggleTodo(r,id){const t=S.todos[r].find(t=>t.id===id);if(t)t.done=!t.done;save();renderTodo();}
+function delTodo(r,id){S.todos[r]=S.todos[r].filter(t=>t.id!==id);save();renderTodo();}
+function clearDone(){ROLES.forEach(r=>{if(S.todos[r])S.todos[r]=S.todos[r].filter(t=>!t.done);});save();renderTodo();toast('Erledigte gelöscht.');}
+
+// ── INIT ─────────────────────────────────────────────────────
+// Expose render functions for Firebase listener
+window._renderPlayers = renderPlayers;
+window._renderTodo = renderTodo;
+window._renderBrowser = renderBrowser;
+
+// Show connecting status
+setSyncStatus(false);
+// Try to set connected status after Firebase loads
+setTimeout(()=>{ if(window._fbReady) setSyncStatus(true); }, 3000);
+
+renderPlayers();
+renderTodo();
+renderBrowser();
+</script>
+</body>
+</html>
