@@ -43,6 +43,15 @@
   });
 </script>
 <style>
+
+/* ═══ GLOBAL OVERFLOW FIX ═══ */
+*,*::before,*::after{max-width:100%;}
+html{overflow-x:hidden!important;width:100%;}
+body{overflow-x:hidden!important;width:100%;position:relative;}
+.app-wrapper,.app-main,.section,main{overflow-x:hidden!important;}
+/* Kill the red scrollbar */
+::-webkit-scrollbar:horizontal{display:none;}
+
 :root{
   --gold:#E8192C;--gold-light:#FFE5E8;--gold-dark:#8B0000;
   --blue:#FF4444;--blue-dark:#3D0000;
@@ -53,12 +62,12 @@
   --rg-red:#E8192C;--rg-red-dark:#8B0000;--rg-red-glow:rgba(232,25,44,0.4);
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-html{overflow-x:hidden;}
+html,body{overflow-x:hidden;max-width:100%;}
 body{background:var(--bg);font-family:'Exo 2',sans-serif;color:var(--text);min-height:100vh;overflow-x:hidden;width:100%;}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 20%,rgba(232,25,44,0.05) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 80% 80%,rgba(139,0,0,0.08) 0%,transparent 60%);pointer-events:none;z-index:0;}
 
 /* ── APP LAYOUT ── */
-.app-wrapper{display:flex;min-height:100vh;overflow-x:hidden;width:100%;}
+.app-wrapper{display:flex;min-height:100vh;width:100%;max-width:100vw;overflow:hidden;}
 
 /* SIDEBAR */
 .sidebar{position:fixed;left:0;top:0;bottom:0;width:240px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:200;transition:transform .3s;overflow:hidden;}
@@ -92,11 +101,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 @media(max-width:860px){.sidebar-overlay.show{display:block;}}
 
 /* MAIN CONTENT */
-.app-main{margin-left:240px;flex:1;min-width:0;max-width:calc(100vw - 240px);display:flex;flex-direction:column;overflow-x:hidden;}
-@media(max-width:860px){.app-main{margin-left:0;max-width:100vw;}}
+.app-main{margin-left:240px;flex:1;min-width:0;width:calc(100vw - 240px);max-width:calc(100vw - 240px);display:flex;flex-direction:column;overflow:hidden;}
+@media(max-width:860px){.app-main{margin-left:0;width:100vw;max-width:100vw;}}
 
-main{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:2rem 2rem;width:100%;}
-.section{display:none;animation:fadeUp 0.3s ease;}
+main{position:relative;z-index:1;max-width:100%;margin:0;padding:1.5rem;overflow-x:hidden;}
+.section{display:none;animation:fadeUp 0.3s ease;max-width:100%;overflow-x:hidden;}
 .section.active{display:block;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
 
@@ -276,13 +285,13 @@ select option{background:var(--bg4);}
 ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg2);}::-webkit-scrollbar-thumb{background:var(--gold-dark);border-radius:3px;}
 
 /* ── PLAYER CARDS ── */
-.player-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:1.4rem;}
+.player-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(360px,100%),1fr));gap:1rem;}
 
 .player-card{
   background:var(--bg3);border:1px solid var(--border);
   border-radius:6px;overflow:hidden;
   transition:border-color .2s,box-shadow .2s;
-  display:flex;flex-direction:column;
+  display:flex;flex-direction:column;max-width:100%;
 }
 .player-card::before{content:'';display:block;height:3px;}
 .player-card[data-role="Top"]::before{background:linear-gradient(90deg,transparent,var(--top),transparent);}
@@ -366,7 +375,7 @@ select option{background:var(--bg4);}
 .todo-add-btn:hover{border-color:var(--gold-dark);color:var(--gold);}
 
 /* ── CHAMPION BROWSER (full page tab) ── */
-.browser-layout{display:grid;grid-template-columns:220px 1fr;gap:1.5rem;align-items:start;}
+.browser-layout{display:grid;grid-template-columns:220px 1fr;gap:1.2rem;align-items:start;}@media(max-width:700px){.browser-layout{grid-template-columns:1fr;}}
 .browser-sidebar{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:1rem;display:flex;flex-direction:column;gap:6px;}@media(max-width:859px){.browser-sidebar{flex-direction:row;flex-wrap:wrap;gap:6px;padding:.75rem;}}
 .browser-sidebar-title{font-family:'Cinzel',serif;font-size:.82rem;color:var(--text-light);margin-bottom:4px;}
 .player-filter-btn{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:3px;background:var(--bg4);border:1px solid var(--border);cursor:pointer;font-family:'Exo 2',sans-serif;font-size:.78rem;font-weight:600;color:var(--text);width:100%;text-align:left;transition:all .15s;}
@@ -391,7 +400,7 @@ select option{background:var(--bg4);}
 .rfb[data-rf="Mid"].active{background:rgba(10,200,185,.1);border-color:var(--mid);color:var(--mid);}
 .rfb[data-rf="Bot"].active{background:rgba(176,139,232,.1);border-color:var(--bot);color:var(--bot);}
 .rfb[data-rf="Support"].active{background:rgba(232,139,139,.1);border-color:var(--sup);color:var(--sup);}
-.champ-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:10px;}
+.champ-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;width:100%;}
 .champ-tile{background:var(--bg4);border:1px solid var(--border);border-radius:4px;cursor:pointer;transition:all .18s;position:relative;display:flex;flex-direction:column;overflow:hidden;}
 .champ-tile:hover{border-color:rgba(200,155,60,.6);transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.5);}
 .champ-tile.owned{border-color:var(--gold-dark);}
@@ -583,7 +592,7 @@ select option{background:var(--bg4);}
 <!-- MOBILE HEADER -->
 <div class="mobile-header">
   <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
-  <img class="mobile-logo-img" src="a.png" onerror="this.style.display='none'" alt="RG">
+  
   <span class="mobile-team-name" id="mobileTeamName">RISING GENERATION</span>
   <div class="mobile-sync">
     <span id="syncDot2" style="width:6px;height:6px;border-radius:50%;background:#555;display:inline-block;"></span>
@@ -597,7 +606,7 @@ select option{background:var(--bg4);}
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
-      <img class="sidebar-logo-img" src="a.png" onerror="this.style.display='none'" alt="RG Logo">
+      <div style="width:56px;height:56px;background:linear-gradient(135deg,var(--rg-red-dark),var(--rg-red));border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-weight:900;color:#fff;font-size:1.2rem;margin-bottom:.6rem;">RG</div>
       <div class="sidebar-team-name" id="teamNameDisplay">RISING GENERATION</div>
       <div class="sidebar-sync">
         <span id="syncDot" style="width:6px;height:6px;border-radius:50%;background:#555;display:inline-block;"></span>
@@ -617,19 +626,6 @@ select option{background:var(--bg4);}
 
   <!-- MAIN AREA -->
   <div class="app-main">
-    <!-- HERO BANNER -->
-    <div class="hero-banner">
-      <img class="hero-banner-img" src="banner.png" onerror="this.src='';this.style.background='linear-gradient(135deg,#1a0000,#0a0000)'" alt="Banner">
-      <div class="hero-banner-overlay"></div>
-      <div class="hero-banner-content">
-        <img class="hero-logo" src="a.png" onerror="this.style.display='none'" alt="RG">
-        <div class="hero-text">
-          <div class="hero-team-name">RISING GENERATION</div>
-          <div class="hero-subtitle">Team Hub · League of Legends</div>
-        </div>
-        <div class="hero-roster" id="heroRoster"></div>
-      </div>
-    </div>
 
     <main>
 
@@ -1413,19 +1409,7 @@ setTimeout(()=>{ if(window._fbReady) setSyncStatus(true); }, 3000);
 renderPlayers();
 renderTodo();
 renderBrowser();
-// Hero roster
-function renderHeroRoster(){
-  const el=document.getElementById('heroRoster');
-  if(!el)return;
-  el.innerHTML=S.players.map(p=>`
-    <div class="hero-player-chip" title="${p.name}">
-      <div class="hero-player-avatar">
-        <img src="${img(p.avatar||'Jinx')}" loading="lazy" onerror="this.style.display='none'">
-      </div>
-    </div>`).join('');
-}
-renderHeroRoster();
-window._renderHeroRoster=renderHeroRoster;
+
 </script>
 </body>
 </html>
