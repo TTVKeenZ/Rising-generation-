@@ -86,6 +86,77 @@ input,select{background:var(--bg4);border:1px solid var(--border);color:var(--te
 input:focus,select:focus{border-color:var(--gold-dark);}
 select option{background:var(--bg4);}
 
+/* ── TEAM COMP ── */
+.comp-layout{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+@media(max-width:700px){.comp-layout{grid-template-columns:1fr;}}
+
+.comp-controls{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:1.4rem;display:flex;flex-direction:column;gap:1rem;}
+.comp-controls-title{font-family:'Cinzel',serif;font-size:.95rem;color:var(--text-bright);margin-bottom:.2rem;}
+.comp-controls-sub{font-size:.72rem;color:var(--text);line-height:1.6;}
+
+.comp-style-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.comp-style-btn{padding:9px 10px;background:var(--bg4);border:1px solid var(--border);border-radius:4px;cursor:pointer;font-family:'Exo 2',sans-serif;font-size:.72rem;font-weight:600;color:var(--text);transition:all .15s;text-align:left;}
+.comp-style-btn:hover{border-color:var(--gold-dark);color:var(--text-bright);}
+.comp-style-btn.selected{border-color:var(--gold);color:var(--gold-light);background:rgba(200,155,60,.08);}
+.comp-style-btn .csb-icon{font-size:1.1rem;display:block;margin-bottom:3px;}
+.comp-style-btn .csb-name{display:block;font-size:.72rem;font-weight:700;}
+.comp-style-btn .csb-desc{display:block;font-size:.62rem;color:var(--text);margin-top:2px;font-weight:400;}
+
+.comp-generate-btn{width:100%;padding:.75rem;background:linear-gradient(135deg,var(--gold-dark),var(--gold));border:none;border-radius:4px;font-family:'Cinzel',serif;font-size:.9rem;font-weight:600;color:var(--bg);cursor:pointer;transition:all .2s;letter-spacing:.06em;}
+.comp-generate-btn:hover{filter:brightness(1.12);transform:translateY(-1px);}
+.comp-generate-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+
+.comp-pool-summary{display:flex;flex-direction:column;gap:6px;}
+.comp-pool-row{display:flex;align-items:center;gap:8px;font-size:.75rem;}
+.comp-pool-icons{display:flex;gap:3px;flex-wrap:wrap;}
+.comp-pool-icon{width:24px;height:24px;border-radius:3px;overflow:hidden;border:1px solid var(--border);background:var(--bg4);flex-shrink:0;}
+.comp-pool-icon img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
+.comp-pool-icon-fb{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:.6rem;color:var(--gold-dark);font-weight:700;}
+
+.comp-results{display:flex;flex-direction:column;gap:1rem;}
+.comp-loading{text-align:center;padding:3rem 1rem;color:var(--text);}
+.comp-loading .spin{font-size:2rem;animation:spin 1s linear infinite;display:inline-block;margin-bottom:.5rem;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+.comp-card{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:1.3rem;transition:border-color .2s;}
+.comp-card:hover{border-color:rgba(200,155,60,.3);}
+.comp-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;}
+.comp-card-title{font-family:'Cinzel',serif;font-size:1rem;color:var(--text-bright);}
+.comp-card-type{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;padding:2px 8px;border-radius:2px;background:rgba(200,155,60,.1);color:var(--gold);border:1px solid rgba(200,155,60,.25);}
+
+.comp-picks{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:.9rem;}
+.comp-pick{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.comp-pick-img{width:44px;height:44px;border-radius:50%;overflow:hidden;border:2px solid var(--border);background:var(--bg4);}
+.comp-pick-img img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
+.comp-pick-img-fb{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--gold-dark);font-weight:700;}
+.comp-pick-name{font-size:.6rem;color:var(--text-bright);font-weight:600;text-align:center;max-width:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.comp-pick-role{font-size:.55rem;color:var(--text);}
+.comp-pick[data-role="Top"] .comp-pick-img{border-color:var(--top);}
+.comp-pick[data-role="Jungle"] .comp-pick-img{border-color:var(--jgl);}
+.comp-pick[data-role="Mid"] .comp-pick-img{border-color:var(--mid);}
+.comp-pick[data-role="Bot"] .comp-pick-img{border-color:var(--bot);}
+.comp-pick[data-role="Support"] .comp-pick-img{border-color:var(--sup);}
+
+.comp-analysis{font-size:.78rem;line-height:1.6;color:var(--text);margin-bottom:.8rem;}
+.comp-bans{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.comp-bans-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text);font-weight:600;}
+.comp-ban-chip{background:rgba(198,59,59,.08);border:1px solid rgba(198,59,59,.25);color:#e08080;padding:2px 8px;border-radius:2px;font-size:.68rem;}
+
+.comp-learn{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:1.3rem;}
+.comp-learn-title{font-family:'Cinzel',serif;font-size:.95rem;color:var(--text-bright);margin-bottom:.9rem;}
+.comp-learn-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid rgba(120,90,40,.12);}
+.comp-learn-row:last-child{border-bottom:none;}
+.comp-learn-avatar{width:36px;height:36px;border-radius:50%;overflow:hidden;border:2px solid var(--gold-dark);flex-shrink:0;background:var(--bg4);}
+.comp-learn-avatar img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
+.comp-learn-info{flex:1;}
+.comp-learn-player{font-size:.8rem;font-weight:600;color:var(--text-bright);}
+.comp-learn-text{font-size:.74rem;color:var(--text);line-height:1.5;margin-top:2px;}
+.comp-learn-champs{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px;}
+.comp-learn-champ{background:rgba(200,155,60,.1);border:1px solid rgba(200,155,60,.25);color:var(--gold);padding:1px 7px;border-radius:2px;font-size:.65rem;font-weight:600;}
+
+.comp-empty{text-align:center;padding:3rem 1rem;color:var(--text);opacity:.5;}
+.comp-empty .big{font-size:2.5rem;margin-bottom:.5rem;}
+
 #toast{position:fixed;bottom:1rem;right:1rem;left:1rem;text-align:center;background:var(--bg3);border:1px solid var(--gold-dark);padding:.75rem 1.4rem;border-radius:4px;font-size:.82rem;color:var(--text-light);z-index:1000;transform:translateY(80px);opacity:0;transition:all .3s;box-shadow:0 8px 32px rgba(0,0,0,.5);}@media(min-width:500px){#toast{left:auto;right:2rem;text-align:left;}}
 #toast.show{transform:translateY(0);opacity:1;}
 ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg2);}::-webkit-scrollbar-thumb{background:var(--gold-dark);border-radius:3px;}
@@ -233,6 +304,77 @@ select option{background:var(--bg4);}
 .rp-cancel{margin-top:6px;padding:5px;border-radius:3px;background:none;border:1px solid var(--border);cursor:pointer;font-family:'Exo 2',sans-serif;font-size:.7rem;color:var(--text);width:100%;text-align:center;transition:color .15s;}
 .rp-cancel:hover{color:var(--red);}
 
+/* ── TEAM COMP ── */
+.comp-layout{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+@media(max-width:700px){.comp-layout{grid-template-columns:1fr;}}
+
+.comp-controls{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:1.4rem;display:flex;flex-direction:column;gap:1rem;}
+.comp-controls-title{font-family:'Cinzel',serif;font-size:.95rem;color:var(--text-bright);margin-bottom:.2rem;}
+.comp-controls-sub{font-size:.72rem;color:var(--text);line-height:1.6;}
+
+.comp-style-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.comp-style-btn{padding:9px 10px;background:var(--bg4);border:1px solid var(--border);border-radius:4px;cursor:pointer;font-family:'Exo 2',sans-serif;font-size:.72rem;font-weight:600;color:var(--text);transition:all .15s;text-align:left;}
+.comp-style-btn:hover{border-color:var(--gold-dark);color:var(--text-bright);}
+.comp-style-btn.selected{border-color:var(--gold);color:var(--gold-light);background:rgba(200,155,60,.08);}
+.comp-style-btn .csb-icon{font-size:1.1rem;display:block;margin-bottom:3px;}
+.comp-style-btn .csb-name{display:block;font-size:.72rem;font-weight:700;}
+.comp-style-btn .csb-desc{display:block;font-size:.62rem;color:var(--text);margin-top:2px;font-weight:400;}
+
+.comp-generate-btn{width:100%;padding:.75rem;background:linear-gradient(135deg,var(--gold-dark),var(--gold));border:none;border-radius:4px;font-family:'Cinzel',serif;font-size:.9rem;font-weight:600;color:var(--bg);cursor:pointer;transition:all .2s;letter-spacing:.06em;}
+.comp-generate-btn:hover{filter:brightness(1.12);transform:translateY(-1px);}
+.comp-generate-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+
+.comp-pool-summary{display:flex;flex-direction:column;gap:6px;}
+.comp-pool-row{display:flex;align-items:center;gap:8px;font-size:.75rem;}
+.comp-pool-icons{display:flex;gap:3px;flex-wrap:wrap;}
+.comp-pool-icon{width:24px;height:24px;border-radius:3px;overflow:hidden;border:1px solid var(--border);background:var(--bg4);flex-shrink:0;}
+.comp-pool-icon img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
+.comp-pool-icon-fb{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:.6rem;color:var(--gold-dark);font-weight:700;}
+
+.comp-results{display:flex;flex-direction:column;gap:1rem;}
+.comp-loading{text-align:center;padding:3rem 1rem;color:var(--text);}
+.comp-loading .spin{font-size:2rem;animation:spin 1s linear infinite;display:inline-block;margin-bottom:.5rem;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+.comp-card{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:1.3rem;transition:border-color .2s;}
+.comp-card:hover{border-color:rgba(200,155,60,.3);}
+.comp-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;}
+.comp-card-title{font-family:'Cinzel',serif;font-size:1rem;color:var(--text-bright);}
+.comp-card-type{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;padding:2px 8px;border-radius:2px;background:rgba(200,155,60,.1);color:var(--gold);border:1px solid rgba(200,155,60,.25);}
+
+.comp-picks{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:.9rem;}
+.comp-pick{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.comp-pick-img{width:44px;height:44px;border-radius:50%;overflow:hidden;border:2px solid var(--border);background:var(--bg4);}
+.comp-pick-img img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
+.comp-pick-img-fb{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--gold-dark);font-weight:700;}
+.comp-pick-name{font-size:.6rem;color:var(--text-bright);font-weight:600;text-align:center;max-width:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.comp-pick-role{font-size:.55rem;color:var(--text);}
+.comp-pick[data-role="Top"] .comp-pick-img{border-color:var(--top);}
+.comp-pick[data-role="Jungle"] .comp-pick-img{border-color:var(--jgl);}
+.comp-pick[data-role="Mid"] .comp-pick-img{border-color:var(--mid);}
+.comp-pick[data-role="Bot"] .comp-pick-img{border-color:var(--bot);}
+.comp-pick[data-role="Support"] .comp-pick-img{border-color:var(--sup);}
+
+.comp-analysis{font-size:.78rem;line-height:1.6;color:var(--text);margin-bottom:.8rem;}
+.comp-bans{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.comp-bans-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text);font-weight:600;}
+.comp-ban-chip{background:rgba(198,59,59,.08);border:1px solid rgba(198,59,59,.25);color:#e08080;padding:2px 8px;border-radius:2px;font-size:.68rem;}
+
+.comp-learn{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:1.3rem;}
+.comp-learn-title{font-family:'Cinzel',serif;font-size:.95rem;color:var(--text-bright);margin-bottom:.9rem;}
+.comp-learn-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid rgba(120,90,40,.12);}
+.comp-learn-row:last-child{border-bottom:none;}
+.comp-learn-avatar{width:36px;height:36px;border-radius:50%;overflow:hidden;border:2px solid var(--gold-dark);flex-shrink:0;background:var(--bg4);}
+.comp-learn-avatar img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
+.comp-learn-info{flex:1;}
+.comp-learn-player{font-size:.8rem;font-weight:600;color:var(--text-bright);}
+.comp-learn-text{font-size:.74rem;color:var(--text);line-height:1.5;margin-top:2px;}
+.comp-learn-champs{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px;}
+.comp-learn-champ{background:rgba(200,155,60,.1);border:1px solid rgba(200,155,60,.25);color:var(--gold);padding:1px 7px;border-radius:2px;font-size:.65rem;font-weight:600;}
+
+.comp-empty{text-align:center;padding:3rem 1rem;color:var(--text);opacity:.5;}
+.comp-empty .big{font-size:2.5rem;margin-bottom:.5rem;}
+
 #toast{position:fixed;bottom:1rem;right:1rem;left:1rem;text-align:center;background:var(--bg3);border:1px solid var(--gold-dark);padding:.75rem 1.4rem;border-radius:4px;font-size:.82rem;color:var(--text-light);z-index:2000;transform:translateY(80px);opacity:0;transition:all .3s;box-shadow:0 8px 32px rgba(0,0,0,.5);}@media(min-width:500px){#toast{left:auto;right:2rem;text-align:left;}}
 #toast.show{transform:translateY(0);opacity:1;}
 </style>
@@ -257,6 +399,7 @@ select option{background:var(--bg4);}
   <button class="active" onclick="showSection('players',this)">⚔ Spieler & Champs</button>
   <button onclick="showSection('todo',this)">✅ To-Do</button>
   <button onclick="showSection('browser',this)">🔍 Champion Browser</button>
+  <button onclick="showSection('teamcomp',this)">🤖 KI Team-Comp</button>
 </nav>
 
 <main>
@@ -312,6 +455,68 @@ select option{background:var(--bg4);}
         </div>
         <div class="champ-grid" id="champGrid"></div>
       </div>
+    </div>
+  </div>
+
+  <!-- ══ TEAM COMP ══ -->
+  <div id="teamcomp" class="section">
+    <div class="section-header">
+      <div class="section-title"><span>KI-Analyse</span>Team Composition</div>
+    </div>
+    <div class="comp-layout">
+      <!-- Controls -->
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <div class="comp-controls">
+          <div class="comp-controls-title">Kompositions-Stil</div>
+          <div class="comp-controls-sub">Wähle einen Stil — die KI analysiert eure Champion-Pools und schlägt die besten Kombinationen vor.</div>
+          <div class="comp-style-grid" id="compStyleGrid">
+            <button class="comp-style-btn selected" data-style="Engage" onclick="selectStyle(this)">
+              <span class="csb-icon">⚔️</span>
+              <span class="csb-name">Engage</span>
+              <span class="csb-desc">Hard CC, Team-Fights gewinnen</span>
+            </button>
+            <button class="comp-style-btn" data-style="Poke" onclick="selectStyle(this)">
+              <span class="csb-icon">🎯</span>
+              <span class="csb-name">Poke</span>
+              <span class="csb-desc">Harass, Gegner schwächen</span>
+            </button>
+            <button class="comp-style-btn" data-style="Protect the Carry" onclick="selectStyle(this)">
+              <span class="csb-icon">🛡️</span>
+              <span class="csb-name">Protect Carry</span>
+              <span class="csb-desc">Hypercarry schützen</span>
+            </button>
+            <button class="comp-style-btn" data-style="Split Push" onclick="selectStyle(this)">
+              <span class="csb-icon">🗺️</span>
+              <span class="csb-name">Split Push</span>
+              <span class="csb-desc">Sidelane-Druck, 1-3-1</span>
+            </button>
+            <button class="comp-style-btn" data-style="Pick" onclick="selectStyle(this)">
+              <span class="csb-icon">👁️</span>
+              <span class="csb-name">Pick</span>
+              <span class="csb-desc">Einzelziele isolieren</span>
+            </button>
+            <button class="comp-style-btn" data-style="Beliebig" onclick="selectStyle(this)">
+              <span class="csb-icon">🎲</span>
+              <span class="csb-name">Beliebig</span>
+              <span class="csb-desc">KI wählt den besten Stil</span>
+            </button>
+          </div>
+          <button class="comp-generate-btn" id="generateBtn" onclick="generateComp()">⚡ Team-Comp generieren</button>
+        </div>
+        <!-- Pool Summary -->
+        <div class="comp-controls">
+          <div class="comp-controls-title">Champion-Pools</div>
+          <div class="comp-pool-summary" id="compPoolSummary"></div>
+        </div>
+      </div>
+      <!-- Results -->
+      <div class="comp-results" id="compResults">
+        <div class="comp-empty"><div class="big">🤖</div><p>Wähle einen Stil und klicke auf "Generieren"</p></div>
+      </div>
+    </div>
+    <!-- Learn suggestions -->
+    <div style="margin-top:1.5rem;" id="compLearnWrap" style="display:none;">
+      <div class="comp-learn" id="compLearn"></div>
     </div>
   </div>
 
@@ -557,7 +762,7 @@ let activeRoleFilter = 'All';
 
 function save(){ fbSave(); }
 function toast(m){ const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200); }
-function showSection(id,btn){ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');if(id==='browser')renderBrowserSidebar(); }
+function showSection(id,btn){ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');if(id==='browser')renderBrowserSidebar();if(id==='teamcomp')renderCompPoolSummary(); }
 document.getElementById('teamNameDisplay').textContent=S.teamName;
 function editTeamName(){ const n=prompt('Team-Name:',S.teamName);if(n?.trim()){S.teamName=n.trim().toUpperCase();document.getElementById('teamNameDisplay').textContent=S.teamName;save();toast('Team-Name gespeichert!');} }
 
@@ -718,9 +923,190 @@ function toggleTodo(r,id){const t=S.todos[r].find(t=>t.id===id);if(t)t.done=!t.d
 function delTodo(r,id){S.todos[r]=S.todos[r].filter(t=>t.id!==id);save();renderTodo();}
 function clearDone(){ROLES.forEach(r=>{if(S.todos[r])S.todos[r]=S.todos[r].filter(t=>!t.done);});save();renderTodo();toast('Erledigte gelöscht.');}
 
+// ── TEAM COMP ─────────────────────────────────────────────────
+let selectedCompStyle = 'Engage';
+
+function selectStyle(btn){
+  document.querySelectorAll('.comp-style-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedCompStyle = btn.dataset.style;
+}
+
+function renderCompPoolSummary(){
+  const el = document.getElementById('compPoolSummary');
+  if(!el) return;
+  el.innerHTML = S.players.map(p=>{
+    const icons = p.pool.slice(0,6).map(c=>`
+      <div class="comp-pool-icon" title="${c.champName}">
+        <img src="${img(c.champId)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="comp-pool-icon-fb" style="display:none">${c.champName[0]}</div>
+      </div>`).join('');
+    return `<div class="comp-pool-row">
+      <span class="role-badge role-${p.role}" style="flex-shrink:0;">${ROLE_ICONS[p.role]} ${p.name.replace('RG ','')}</span>
+      <div class="comp-pool-icons">${icons || '<span style="font-size:.7rem;color:var(--text);opacity:.5">Kein Pool</span>'}</div>
+    </div>`;
+  }).join('');
+}
+
+async function generateComp(){
+  const btn = document.getElementById('generateBtn');
+  const results = document.getElementById('compResults');
+
+  // Check if pools have enough data
+  const totalChamps = S.players.reduce((sum,p)=>sum+p.pool.length,0);
+  if(totalChamps < 3){
+    toast('Bitte erst Champion-Pools befüllen!');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ Analysiere…';
+  results.innerHTML = '<div class="comp-loading"><div class="spin">⚔</div><p>KI analysiert eure Champion-Pools…</p></div>';
+  document.getElementById('compLearnWrap').style.display='none';
+
+  // Build prompt
+  const poolDesc = S.players.map(p=>{
+    const champs = p.pool.map(c=>`${c.champName}(${c.role})`).join(', ');
+    return `${p.name} (${p.role}): ${champs || 'kein Pool'}`;
+  }).join('\n');
+
+  const prompt = `Du bist ein League of Legends Coach für ein kompetitives Team namens "Rising Generation".
+
+Hier sind die Champion-Pools der 5 Spieler:
+${poolDesc}
+
+Gewünschter Kompositions-Stil: ${selectedCompStyle}
+
+Aufgabe 1 — Team-Compositions:
+Erstelle 2 konkrete Team-Comps ausschließlich aus den vorhandenen Champion-Pools. Falls ein Spieler für eine Rolle keinen passenden Champion hat, nutze trotzdem nur seine vorhandenen Champs und erkläre den Kompromiss.
+
+Aufgabe 2 — Lernempfehlungen:
+Analysiere die Pools und empfehle jedem Spieler 1-2 Champions die sie lernen sollten um flexibler/stärker zu werden, mit kurzer Begründung.
+
+Antworte NUR als gültiges JSON in diesem Format (kein Text drumherum, keine Markdown-Backticks):
+{
+  "comps": [
+    {
+      "name": "Comp-Name",
+      "style": "Stil",
+      "picks": [
+        {"role":"Top","champion":"Name","player":"RG Kicker"},
+        {"role":"Jungle","champion":"Name","player":"RG Chidori"},
+        {"role":"Mid","champion":"Name","player":"RG Cubes"},
+        {"role":"Bot","champion":"Name","player":"RG Keenz"},
+        {"role":"Support","champion":"Name","player":"RG Fireknight"}
+      ],
+      "analysis": "Kurze Erklärung warum diese Comp funktioniert (2-3 Sätze)",
+      "bans": ["Ban1","Ban2","Ban3"]
+    }
+  ],
+  "learn": [
+    {"player":"RG Kicker","champions":["Champ1","Champ2"],"reason":"Begründung"},
+    {"player":"RG Chidori","champions":["Champ1"],"reason":"Begründung"},
+    {"player":"RG Cubes","champions":["Champ1","Champ2"],"reason":"Begründung"},
+    {"player":"RG Keenz","champions":["Champ1"],"reason":"Begründung"},
+    {"player":"RG Fireknight","champions":["Champ1","Champ2"],"reason":"Begründung"}
+  ]
+}`;
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1500,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    const data = await response.json();
+    const text = data.content?.[0]?.text || '';
+
+    // Parse JSON
+    let parsed;
+    try {
+      const clean = text.replace(/```json|```/g,'').trim();
+      parsed = JSON.parse(clean);
+    } catch(e) {
+      throw new Error('JSON-Parsing fehlgeschlagen');
+    }
+
+    renderCompResults(parsed);
+
+  } catch(e) {
+    results.innerHTML = `<div class="comp-empty"><div class="big">⚠️</div><p>Fehler: ${e.message}<br><small>Stelle sicher dass die API erreichbar ist.</small></p></div>`;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '⚡ Team-Comp generieren';
+  }
+}
+
+function renderCompResults(data){
+  const results = document.getElementById('compResults');
+
+  // Render comps
+  results.innerHTML = (data.comps||[]).map(comp=>{
+    const picks = (comp.picks||[]).map(p=>{
+      // Find champId from name
+      const found = ALL_CHAMPS.find(([id,name])=>name.toLowerCase()===p.champion.toLowerCase());
+      const champId = found ? found[0] : p.champion;
+      return `<div class="comp-pick" data-role="${p.role}">
+        <div class="comp-pick-img">
+          <img src="${img(champId)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="comp-pick-img-fb" style="display:none">${p.champion[0]}</div>
+        </div>
+        <div class="comp-pick-name">${p.champion}</div>
+        <div class="comp-pick-role">${p.player.replace('RG ','')}</div>
+      </div>`;
+    }).join('');
+
+    const bans = (comp.bans||[]).map(b=>`<span class="comp-ban-chip">✕ ${b}</span>`).join('');
+
+    return `<div class="comp-card">
+      <div class="comp-card-header">
+        <div class="comp-card-title">${comp.name}</div>
+        <span class="comp-card-type">${comp.style}</span>
+      </div>
+      <div class="comp-picks">${picks}</div>
+      <div class="comp-analysis">${comp.analysis}</div>
+      ${bans?`<div class="comp-bans"><span class="comp-bans-label">Bans:</span>${bans}</div>`:''}
+    </div>`;
+  }).join('');
+
+  // Render learn suggestions
+  if(data.learn && data.learn.length){
+    const learnWrap = document.getElementById('compLearnWrap');
+    const learnEl = document.getElementById('compLearn');
+    learnEl.innerHTML = `<div class="comp-learn-title">📚 Lernempfehlungen</div>` +
+      data.learn.map(l=>{
+        const player = S.players.find(p=>p.name===l.player);
+        const avatarId = player?.avatar || '';
+        return `<div class="comp-learn-row">
+          <div class="comp-learn-avatar">
+            ${avatarId
+              ? `<img src="${img(avatarId)}" loading="lazy" onerror="this.style.display='none'">`
+              : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--gold);">${l.player[0]}</div>`
+            }
+          </div>
+          <div class="comp-learn-info">
+            <div class="comp-learn-player">${l.player}</div>
+            <div class="comp-learn-champs">${(l.champions||[]).map(ch=>`<span class="comp-learn-champ">${ch}</span>`).join('')}</div>
+            <div class="comp-learn-text">${l.reason}</div>
+          </div>
+        </div>`;
+      }).join('');
+    learnWrap.style.display = 'block';
+  }
+}
+
+// Update pool summary when switching to teamcomp tab
+const _origShowSection = window.showSection || null;
+
 // ── INIT ─────────────────────────────────────────────────────
 // Expose render functions for Firebase listener
 window._renderPlayers = renderPlayers;
+window._renderCompPoolSummary = renderCompPoolSummary;
 window._renderTodo = renderTodo;
 window._renderBrowser = renderBrowser;
 
