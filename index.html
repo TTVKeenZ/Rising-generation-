@@ -43,78 +43,40 @@
   });
 </script>
 <style>
-
-/* ═══ GLOBAL OVERFLOW FIX ═══ */
-*,*::before,*::after{max-width:100%;}
-html{overflow-x:hidden!important;width:100%;}
-body{overflow-x:hidden!important;width:100%;position:relative;}
-.app-wrapper,.app-main,.section,main{overflow-x:hidden!important;}
-/* Kill the red scrollbar */
-::-webkit-scrollbar:horizontal{display:none;}
-
 :root{
-  --gold:#E8192C;--gold-light:#FFE5E8;--gold-dark:#8B0000;
-  --blue:#FF4444;--blue-dark:#3D0000;
-  --bg:#0A0000;--bg2:#0F0505;--bg3:#160808;--bg4:#1E0A0A;
-  --text:#A08080;--text-light:#CC8888;--text-bright:#FFE5E5;
-  --red:#E8192C;--border:rgba(180,20,20,0.3);
+  --gold:#C89B3C;--gold-light:#F0E6D3;--gold-dark:#785A28;
+  --blue:#0AC8B9;--blue-dark:#0A323C;
+  --bg:#010A13;--bg2:#0D1117;--bg3:#111927;--bg4:#1E2936;
+  --text:#A09B8C;--text-light:#C8AA6E;--text-bright:#F0E6D3;
+  --red:#C63B3B;--border:rgba(120,90,40,0.35);
   --top:#e2a553;--jgl:#4caf7a;--mid:#0AC8B9;--bot:#b08be8;--sup:#e88b8b;
-  --rg-red:#E8192C;--rg-red-dark:#8B0000;--rg-red-glow:rgba(232,25,44,0.4);
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-html,body{overflow-x:hidden;max-width:100%;}
-body{background:var(--bg);font-family:'Exo 2',sans-serif;color:var(--text);min-height:100vh;overflow-x:hidden;width:100%;}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 20%,rgba(232,25,44,0.05) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 80% 80%,rgba(139,0,0,0.08) 0%,transparent 60%);pointer-events:none;z-index:0;}
+body{background:var(--bg);font-family:'Exo 2',sans-serif;color:var(--text);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 20%,rgba(10,200,185,0.04) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 80% 80%,rgba(200,155,60,0.06) 0%,transparent 60%);pointer-events:none;z-index:0;}
 
-/* ── APP LAYOUT ── */
-.app-wrapper{display:flex;min-height:100vh;width:100%;max-width:100vw;overflow:hidden;}
+header{position:sticky;top:0;z-index:201;padding:0 1rem;border-bottom:1px solid var(--border);background:rgba(1,10,19,0.97);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:space-between;height:56px;}
+.logo{font-family:'Cinzel',serif;font-weight:900;font-size:1.1rem;color:var(--gold-light);letter-spacing:0.12em;display:flex;align-items:center;gap:8px;}
+.logo-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--gold-dark),var(--gold));clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--bg);font-weight:900;}
 
-/* SIDEBAR */
-.sidebar{position:fixed;left:0;top:0;bottom:0;width:240px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:200;transition:transform .3s;overflow:hidden;}
-@media(max-width:860px){.sidebar{transform:translateX(-100%);}.sidebar.open{transform:translateX(0);}}
+nav{position:sticky;top:56px;z-index:200;display:flex;padding:0 1rem;background:rgba(13,17,23,0.99);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch;}
+nav button{background:none;border:none;cursor:pointer;padding:.85rem 1rem;font-family:'Exo 2',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text);position:relative;transition:color 0.2s;white-space:nowrap;}
+nav button::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform 0.2s;}
+nav button:hover{color:var(--text-light);}
+nav button.active{color:var(--gold-light);}
+nav button.active::after{transform:scaleX(1);}
 
-.sidebar-logo{padding:1.2rem 1.2rem 1rem;border-bottom:1px solid var(--border);}
-.sidebar-logo-img{width:56px;height:56px;border-radius:8px;object-fit:cover;object-position:center center;margin-bottom:.6rem;display:block;border:2px solid rgba(232,25,44,.3);box-shadow:0 0 12px rgba(232,25,44,.2);}
-.sidebar-team-name{font-family:'Cinzel',serif;font-size:.9rem;font-weight:900;color:var(--text-bright);letter-spacing:.12em;line-height:1.3;}
-.sidebar-sync{display:flex;align-items:center;gap:5px;font-size:.62rem;color:var(--text);margin-top:4px;}
-
-.sidebar-nav{flex:1;padding:.75rem 0;overflow-y:auto;}
-.sidebar-nav-btn{display:flex;align-items:center;gap:12px;width:100%;padding:.9rem 1.4rem;background:none;border:none;cursor:pointer;font-family:'Exo 2',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.08em;color:var(--text);text-align:left;transition:all .2s;position:relative;text-transform:uppercase;}
-.sidebar-nav-btn:hover{color:var(--text-bright);background:rgba(232,25,44,.05);}
-.sidebar-nav-btn.active{color:var(--rg-red);background:rgba(232,25,44,.08);}
-.sidebar-nav-btn.active::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--rg-red);border-radius:0 2px 2px 0;}
-.sidebar-nav-icon{font-size:1rem;width:20px;text-align:center;flex-shrink:0;}
-
-.sidebar-footer{padding:1rem 1.2rem;border-top:1px solid var(--border);}
-.sidebar-rename-btn{width:100%;padding:6px;background:none;border:1px solid var(--border);color:var(--text);font-family:'Exo 2',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:all .15s;}
-.sidebar-rename-btn:hover{border-color:var(--rg-red);color:var(--text-bright);}
-
-/* MOBILE HEADER */
-.mobile-header{display:none;position:sticky;top:0;z-index:201;height:52px;background:rgba(10,0,0,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);align-items:center;padding:0 1rem;gap:10px;}
-@media(max-width:860px){.mobile-header{display:flex;}}
-.mobile-menu-btn{background:none;border:1px solid var(--border);color:var(--text);width:32px;height:32px;border-radius:3px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.mobile-logo-img{width:28px;height:28px;border-radius:4px;object-fit:cover;}
-.mobile-team-name{font-family:'Cinzel',serif;font-size:.85rem;font-weight:900;color:var(--text-bright);letter-spacing:.1em;flex:1;}
-.mobile-sync{display:flex;align-items:center;gap:4px;font-size:.6rem;color:var(--text);}
-
-.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:199;}
-@media(max-width:860px){.sidebar-overlay.show{display:block;}}
-
-/* MAIN CONTENT */
-.app-main{margin-left:240px;flex:1;min-width:0;width:calc(100vw - 240px);max-width:calc(100vw - 240px);display:flex;flex-direction:column;overflow:hidden;}
-@media(max-width:860px){.app-main{margin-left:0;width:100vw;max-width:100vw;}}
-
-main{position:relative;z-index:1;max-width:100%;margin:0;padding:1.5rem;overflow-x:hidden;}
-.section{display:none;animation:fadeUp 0.3s ease;max-width:100%;overflow-x:hidden;}
+main{position:relative;z-index:1;max-width:1500px;margin:0 auto;padding:1.5rem 1rem;}@media(min-width:640px){main{padding:2.5rem 2rem;}}
+.section{display:none;animation:fadeUp 0.3s ease;}
 .section.active{display:block;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
 
-.section-header{display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem;flex-wrap:wrap;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border);width:100%;}
-.section-title{font-family:'Cinzel',serif;font-size:1.6rem;font-weight:600;color:var(--text-bright);letter-spacing:0.1em;}
-.section-title span{font-size:0.72rem;font-family:'Exo 2',sans-serif;color:var(--rg-red);letter-spacing:0.12em;text-transform:uppercase;font-weight:400;display:block;margin-bottom:5px;}
+.section-header{display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem;flex-wrap:wrap;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+.section-title{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:600;color:var(--text-bright);letter-spacing:0.08em;}
+.section-title span{font-size:0.72rem;font-family:'Exo 2',sans-serif;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;font-weight:400;display:block;margin-bottom:5px;}
 
 .btn{display:inline-flex;align-items:center;gap:6px;padding:.5rem 1.2rem;font-family:'Exo 2',sans-serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;cursor:pointer;border-radius:3px;transition:all .2s;border:none;}
-.btn-gold{background:linear-gradient(135deg,var(--rg-red-dark),var(--rg-red));color:#fff;}
+.btn-gold{background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:var(--bg);}
 .btn-gold:hover{filter:brightness(1.15);transform:translateY(-1px);}
 .btn-outline{background:transparent;border:1px solid var(--border);color:var(--text);}
 .btn-outline:hover{border-color:var(--gold-dark);color:var(--text-light);}
@@ -164,7 +126,7 @@ select option{background:var(--bg4);}
 
 .comp-picks{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:.9rem;}
 .comp-pick{display:flex;flex-direction:column;align-items:center;gap:4px;}
-.comp-pick-img{width:56px;height:56px;border-radius:50%;overflow:hidden;border:2px solid var(--border);background:var(--bg4);}
+.comp-pick-img{width:44px;height:44px;border-radius:50%;overflow:hidden;border:2px solid var(--border);background:var(--bg4);}
 .comp-pick-img img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
 .comp-pick-img-fb{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--gold-dark);font-weight:700;}
 .comp-pick-name{font-size:.6rem;color:var(--text-bright);font-weight:600;text-align:center;max-width:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
@@ -285,13 +247,13 @@ select option{background:var(--bg4);}
 ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg2);}::-webkit-scrollbar-thumb{background:var(--gold-dark);border-radius:3px;}
 
 /* ── PLAYER CARDS ── */
-.player-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(360px,100%),1fr));gap:1rem;}
+.player-grid{display:grid;grid-template-columns:1fr;gap:1.2rem;}@media(min-width:720px){.player-grid{grid-template-columns:repeat(auto-fill,minmax(340px,1fr));}}
 
 .player-card{
   background:var(--bg3);border:1px solid var(--border);
   border-radius:6px;overflow:hidden;
   transition:border-color .2s,box-shadow .2s;
-  display:flex;flex-direction:column;max-width:100%;
+  display:flex;flex-direction:column;
 }
 .player-card::before{content:'';display:block;height:3px;}
 .player-card[data-role="Top"]::before{background:linear-gradient(90deg,transparent,var(--top),transparent);}
@@ -335,8 +297,8 @@ select option{background:var(--bg4);}
 .champ-empty{font-size:.74rem;color:var(--text);opacity:.4;padding:.5rem 0;text-align:center;font-style:italic;grid-column:1/-1;}
 
 /* ── TODO ── */
-.todo-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1.2rem;}@media(max-width:1100px){.todo-grid{grid-template-columns:repeat(3,1fr);}}@media(max-width:600px){.todo-grid{grid-template-columns:1fr 1fr;}}
-.todo-col{background:var(--bg3);border:1px solid var(--border);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;min-height:460px;}
+.todo-grid{display:grid;grid-template-columns:1fr;gap:1rem;}@media(min-width:500px){.todo-grid{grid-template-columns:1fr 1fr;}}@media(min-width:900px){.todo-grid{grid-template-columns:repeat(3,1fr);}}@media(min-width:1200px){.todo-grid{grid-template-columns:repeat(5,1fr);}}
+.todo-col{background:var(--bg3);border:1px solid var(--border);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;min-height:280px;}@media(min-width:1200px){.todo-col{min-height:520px;}}
 .todo-col-header{padding:1.1rem 1.2rem;display:flex;align-items:center;gap:10px;border-bottom:2px solid;}
 .todo-role-icon{font-size:1.2rem;}
 .todo-role-label{font-family:'Cinzel',serif;font-size:.82rem;font-weight:600;letter-spacing:.08em;flex:1;}
@@ -375,10 +337,10 @@ select option{background:var(--bg4);}
 .todo-add-btn:hover{border-color:var(--gold-dark);color:var(--gold);}
 
 /* ── CHAMPION BROWSER (full page tab) ── */
-.browser-layout{display:grid;grid-template-columns:220px 1fr;gap:1.2rem;align-items:start;}@media(max-width:700px){.browser-layout{grid-template-columns:1fr;}}
+.browser-layout{display:grid;grid-template-columns:1fr;gap:1rem;}@media(min-width:860px){.browser-layout{grid-template-columns:200px 1fr;}}
 .browser-sidebar{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:1rem;display:flex;flex-direction:column;gap:6px;}@media(max-width:859px){.browser-sidebar{flex-direction:row;flex-wrap:wrap;gap:6px;padding:.75rem;}}
 .browser-sidebar-title{font-family:'Cinzel',serif;font-size:.82rem;color:var(--text-light);margin-bottom:4px;}
-.player-filter-btn{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:3px;background:var(--bg4);border:1px solid var(--border);cursor:pointer;font-family:'Exo 2',sans-serif;font-size:.78rem;font-weight:600;color:var(--text);width:100%;text-align:left;transition:all .15s;}
+.player-filter-btn{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:3px;background:var(--bg4);border:1px solid var(--border);cursor:pointer;font-family:'Exo 2',sans-serif;font-size:.75rem;font-weight:600;color:var(--text);width:100%;text-align:left;transition:all .15s;}@media(max-width:859px){.player-filter-btn{width:auto;}}
 .player-filter-btn.active{border-color:var(--gold);color:var(--gold-light);background:rgba(200,155,60,.08);}
 .player-filter-btn:hover{border-color:var(--gold-dark);color:var(--text-bright);}
 .pf-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
@@ -400,7 +362,7 @@ select option{background:var(--bg4);}
 .rfb[data-rf="Mid"].active{background:rgba(10,200,185,.1);border-color:var(--mid);color:var(--mid);}
 .rfb[data-rf="Bot"].active{background:rgba(176,139,232,.1);border-color:var(--bot);color:var(--bot);}
 .rfb[data-rf="Support"].active{background:rgba(232,139,139,.1);border-color:var(--sup);color:var(--sup);}
-.champ-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;width:100%;}
+.champ-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:7px;}@media(min-width:640px){.champ-grid{grid-template-columns:repeat(auto-fill,minmax(82px,1fr));gap:9px;}}
 .champ-tile{background:var(--bg4);border:1px solid var(--border);border-radius:4px;cursor:pointer;transition:all .18s;position:relative;display:flex;flex-direction:column;overflow:hidden;}
 .champ-tile:hover{border-color:rgba(200,155,60,.6);transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.5);}
 .champ-tile.owned{border-color:var(--gold-dark);}
@@ -467,7 +429,7 @@ select option{background:var(--bg4);}
 
 .comp-picks{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:.9rem;}
 .comp-pick{display:flex;flex-direction:column;align-items:center;gap:4px;}
-.comp-pick-img{width:56px;height:56px;border-radius:50%;overflow:hidden;border:2px solid var(--border);background:var(--bg4);}
+.comp-pick-img{width:44px;height:44px;border-radius:50%;overflow:hidden;border:2px solid var(--border);background:var(--bg4);}
 .comp-pick-img img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
 .comp-pick-img-fb{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--gold-dark);font-weight:700;}
 .comp-pick-name{font-size:.6rem;color:var(--text-bright);font-weight:600;text-align:center;max-width:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
@@ -589,45 +551,28 @@ select option{background:var(--bg4);}
 </head>
 <body>
 
-<!-- MOBILE HEADER -->
-<div class="mobile-header">
-  <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
-  
-  <span class="mobile-team-name" id="mobileTeamName">RISING GENERATION</span>
-  <div class="mobile-sync">
-    <span id="syncDot2" style="width:6px;height:6px;border-radius:50%;background:#555;display:inline-block;"></span>
-    <span id="syncLabel2">…</span>
+<header>
+  <div class="logo">
+    <div class="logo-icon">⚔</div>
+    <span id="teamNameDisplay">RISING GENERATION</span>
   </div>
+  <div style="display:flex;align-items:center;gap:8px;">
+  <div id="syncStatus" style="display:flex;align-items:center;gap:5px;font-size:.65rem;color:var(--text);">
+    <span id="syncDot" style="width:7px;height:7px;border-radius:50%;background:#555;display:inline-block;"></span>
+    <span id="syncLabel">Verbinde…</span>
+  </div>
+  <button class="btn btn-outline" onclick="editTeamName()" style="font-size:.72rem;padding:5px 12px;">Umbenennen</button>
 </div>
+</header>
 
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+<nav>
+  <button class="active" onclick="showSection('players',this)">⚔ Spieler & Champs</button>
+  <button onclick="showSection('todo',this)">✅ To-Do</button>
+  <button onclick="showSection('browser',this)">🔍 Champion Browser</button>
+  <button onclick="showSection('manualcomp',this)">✏️ Comp Builder</button>
+</nav>
 
-<div class="app-wrapper">
-  <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-logo">
-      <div style="width:56px;height:56px;background:linear-gradient(135deg,var(--rg-red-dark),var(--rg-red));border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-weight:900;color:#fff;font-size:1.2rem;margin-bottom:.6rem;">RG</div>
-      <div class="sidebar-team-name" id="teamNameDisplay">RISING GENERATION</div>
-      <div class="sidebar-sync">
-        <span id="syncDot" style="width:6px;height:6px;border-radius:50%;background:#555;display:inline-block;"></span>
-        <span id="syncLabel">Verbinde…</span>
-      </div>
-    </div>
-    <nav class="sidebar-nav">
-      <button class="sidebar-nav-btn active" onclick="showSection('players',this)"><span class="sidebar-nav-icon">⚔</span>Spieler & Champs</button>
-      <button class="sidebar-nav-btn" onclick="showSection('todo',this)"><span class="sidebar-nav-icon">✅</span>To-Do</button>
-      <button class="sidebar-nav-btn" onclick="showSection('browser',this)"><span class="sidebar-nav-icon">🔍</span>Champion Browser</button>
-      <button class="sidebar-nav-btn" onclick="showSection('manualcomp',this)"><span class="sidebar-nav-icon">✏️</span>Comp Builder</button>
-    </nav>
-    <div class="sidebar-footer">
-      <button class="sidebar-rename-btn" onclick="editTeamName()">Team umbenennen</button>
-    </div>
-  </aside>
-
-  <!-- MAIN AREA -->
-  <div class="app-main">
-
-    <main>
+<main>
 
   <!-- ══ PLAYERS ══ -->
   <div id="players" class="section active">
@@ -717,9 +662,7 @@ select option{background:var(--bg4);}
     </div>
   </div>
 
-    </main>
-  </div><!-- end app-main -->
-</div><!-- end app-wrapper -->
+</main>
 
 <!-- CHAMPION INFO MODAL -->
 <div id="champInfoModal" class="champ-modal-bg" style="display:none;" onclick="closeChampModal(event)">
@@ -972,18 +915,11 @@ window._S = S;
 
 // Sync status UI
 function setSyncStatus(ok){
-  ['syncDot','syncDot2'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el) el.style.background = ok ? '#4caf7a' : '#e88b8b';
-  });
-  ['syncLabel','syncLabel2'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el) el.textContent = ok ? 'Live' : 'Offline';
-  });
-  ['mobileTeamName','teamNameDisplay'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el && id==='mobileTeamName') el.textContent = S.teamName;
-  });
+  const dot=document.getElementById('syncDot');
+  const lbl=document.getElementById('syncLabel');
+  if(!dot)return;
+  dot.style.background = ok ? '#4caf7a' : '#e88b8b';
+  lbl.textContent = ok ? 'Live' : 'Offline';
 }
 
 // Firebase save — writes only pool+todos+teamName (not avatars/roles which are fixed)
@@ -1008,26 +944,7 @@ let activeRoleFilter = 'All';
 
 function save(){ fbSave(); }
 function toast(m){ const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200); }
-function showSection(id,btn){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.sidebar-nav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  btn.classList.add('active');
-  if(id==='browser')renderBrowserSidebar();
-  if(id==='manualcomp'){renderManualSlots();renderSavedComps();}
-  // Close sidebar on mobile after navigation
-  if(window.innerWidth<=860) closeSidebar();
-}
-function toggleSidebar(){
-  const s=document.getElementById('sidebar');
-  const o=document.getElementById('sidebarOverlay');
-  s.classList.toggle('open');
-  o.classList.toggle('show');
-}
-function closeSidebar(){
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sidebarOverlay').classList.remove('show');
-}
+function showSection(id,btn){ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');if(id==='browser')renderBrowserSidebar();if(id==='manualcomp'){renderManualSlots();renderSavedComps();} }
 document.getElementById('teamNameDisplay').textContent=S.teamName;
 function editTeamName(){ const n=prompt('Team-Name:',S.teamName);if(n?.trim()){S.teamName=n.trim().toUpperCase();document.getElementById('teamNameDisplay').textContent=S.teamName;save();toast('Team-Name gespeichert!');} }
 
@@ -1409,7 +1326,6 @@ setTimeout(()=>{ if(window._fbReady) setSyncStatus(true); }, 3000);
 renderPlayers();
 renderTodo();
 renderBrowser();
-
 </script>
 </body>
 </html>
